@@ -1,96 +1,96 @@
-expect,COUT,0
 expect,O,0
-step, 1
 expect,COUT,0
+step, 1
 expect,O,1
-step, 1
 expect,COUT,0
+step, 1
 expect,O,2
-step, 1
 expect,COUT,0
+step, 1
 expect,O,3
-step, 1
 expect,COUT,0
+step, 1
 expect,O,4
-step, 1
 expect,COUT,0
+step, 1
 expect,O,5
-step, 1
 expect,COUT,0
+step, 1
 expect,O,6
-step, 1
 expect,COUT,0
+step, 1
 expect,O,7
-step, 1
 expect,COUT,0
+step, 1
 expect,O,8
-step, 1
 expect,COUT,0
+step, 1
 expect,O,9
-step, 1
 expect,COUT,0
+step, 1
 expect,O,10
-step, 1
 expect,COUT,0
+step, 1
 expect,O,11
-step, 1
 expect,COUT,0
+step, 1
 expect,O,12
-step, 1
 expect,COUT,0
+step, 1
 expect,O,13
-step, 1
 expect,COUT,0
+step, 1
 expect,O,14
-step, 1
 expect,COUT,0
-expect,O,15
 step, 1
+expect,O,15
+expect,COUT,0
+step, 1
+expect,O,0
 expect,COUT,1
-expect,O,0
 step, 1
-expect,COUT,0
 expect,O,1
-step, 1
 expect,COUT,0
+step, 1
 expect,O,2
-step, 1
 expect,COUT,0
+step, 1
 expect,O,3
-step, 1
 expect,COUT,0
+step, 1
 expect,O,4
-step, 1
 expect,COUT,0
+step, 1
 expect,O,5
-step, 1
 expect,COUT,0
+step, 1
 expect,O,6
-step, 1
 expect,COUT,0
+step, 1
 expect,O,7
-step, 1
 expect,COUT,0
+step, 1
 expect,O,8
-step, 1
 expect,COUT,0
+step, 1
 expect,O,9
-step, 1
 expect,COUT,0
+step, 1
 expect,O,10
-step, 1
 expect,COUT,0
+step, 1
 expect,O,11
-step, 1
 expect,COUT,0
+step, 1
 expect,O,12
-step, 1
 expect,COUT,0
+step, 1
 expect,O,13
-step, 1
 expect,COUT,0
+step, 1
 expect,O,14
-step, 1
 expect,COUT,0
+step, 1
 expect,O,15
+expect,COUT,0
 step, 1
