@@ -1,3 +1,6 @@
 from mantle.common import DefineCounter
+from magma.transforms import flatten
 
-main = DefineCounter(8)
+Counter4 = DefineCounter(4)
+print(repr(Counter4))
+main = flatten(Counter4).circuit

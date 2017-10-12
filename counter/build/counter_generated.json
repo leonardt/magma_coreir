@@ -4,9 +4,9 @@
     "modules":{
       "Counter4_flattened":{
         "type":["Record",{
-          "O":["Array",4,"Bit"],
+          "CLK":["Named","coreir.clkIn"],
           "COUT":"Bit",
-          "CLK":["Named","coreir.clkIn"]
+          "O":["Array",4,"Bit"]
         }],
         "instances":{
           "bit_const_GND":{
@@ -22,20 +22,16 @@
             "genargs":{"width":["Int",5]}
           },
           "inst1":{
-            "genref":"mantle.reg",
-            "genargs":{"has_clr":["Bool",false], "has_en":["Bool",false], "has_rst":["Bool",false], "width":["Int",1]}
+            "modref":"global.reg_U0"
           },
           "inst2":{
-            "genref":"mantle.reg",
-            "genargs":{"has_clr":["Bool",false], "has_en":["Bool",false], "has_rst":["Bool",false], "width":["Int",1]}
+            "modref":"global.reg_U0"
           },
           "inst3":{
-            "genref":"mantle.reg",
-            "genargs":{"has_clr":["Bool",false], "has_en":["Bool",false], "has_rst":["Bool",false], "width":["Int",1]}
+            "modref":"global.reg_U0"
           },
           "inst4":{
-            "genref":"mantle.reg",
-            "genargs":{"has_clr":["Bool",false], "has_en":["Bool",false], "has_rst":["Bool",false], "width":["Int",1]}
+            "modref":"global.reg_U0"
           }
         },
         "connections":[
@@ -62,6 +58,24 @@
           ["inst2.out.0","self.O.1"],
           ["inst3.out.0","self.O.2"],
           ["inst4.out.0","self.O.3"]
+        ]
+      },
+      "reg_U0":{
+        "type":["Record",{
+          "in":["Array",1,"BitIn"],
+          "clk":["Named","coreir.clkIn"],
+          "out":["Array",1,"Bit"]
+        }],
+        "instances":{
+          "reg0":{
+            "genref":"coreir.reg",
+            "genargs":{"width":["Int",1]}
+          }
+        },
+        "connections":[
+          ["reg0.clk","self.clk"],
+          ["reg0.in","self.in"],
+          ["reg0.out","self.out"]
         ]
       }
     }
