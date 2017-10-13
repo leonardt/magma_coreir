@@ -1,5 +1,23 @@
 
 
+module bitir_or (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 | in1;
+
+endmodule //bitir_or
+
+module bitir_xor (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 ^ in1;
+
+endmodule //bitir_xor
+
 module PopCount8_flattened (
   input [7:0] I,
   output [3:0] O
@@ -605,24 +623,6 @@ module PopCount8_flattened (
   assign inst9_in1 = I[4];
 
 endmodule //PopCount8_flattened
-
-module bitir_or (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 | in1;
-
-endmodule //bitir_or
-
-module bitir_xor (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 ^ in1;
-
-endmodule //bitir_xor
 
 module bitir_and (
   input in0,

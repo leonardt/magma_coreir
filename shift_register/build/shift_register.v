@@ -1,5 +1,27 @@
 
 
+module reg_U0 #(parameter init=16) (
+  input  clk,
+  input [0:0] in,
+  output [0:0] out
+);
+  //Wire declarations for instance 'reg0' (Module reg)
+  wire  reg0_clk;
+  wire [0:0] reg0_in;
+  wire [0:0] reg0_out;
+  coreir_reg #(.width(1)) reg0(
+    .clk(reg0_clk),
+    .in(reg0_in),
+    .out(reg0_out)
+  );
+
+  //All the connections
+  assign reg0_clk = clk;
+  assign reg0_in[0:0] = in[0:0];
+  assign out[0:0] = reg0_out[0:0];
+
+endmodule //reg_U0
+
 module SISO4 (
   input  CLK,
   input  I,
@@ -79,28 +101,6 @@ module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
   assign O = inst0_out[0];
 
 endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
-
-module reg_U0 #(parameter init=16) (
-  input  clk,
-  input [0:0] in,
-  output [0:0] out
-);
-  //Wire declarations for instance 'reg0' (Module reg)
-  wire  reg0_clk;
-  wire [0:0] reg0_in;
-  wire [0:0] reg0_out;
-  coreir_reg #(.width(1)) reg0(
-    .clk(reg0_clk),
-    .in(reg0_in),
-    .out(reg0_out)
-  );
-
-  //All the connections
-  assign reg0_clk = clk;
-  assign reg0_in[0:0] = in[0:0];
-  assign out[0:0] = reg0_out[0:0];
-
-endmodule //reg_U0
 
 module coreir_reg #(parameter width=16) (
   input clk,
