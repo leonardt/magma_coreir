@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import subprocess
 
@@ -59,4 +61,8 @@ int main(int argc, char **argv, char **env) {{
             verilator_harness.write("    check(\"{port_name}\", top->{port_name}, {expected}, {cycle});\n".format(port_name=port_name, expected=value, cycle=cycle))
     verilator_harness.write("}\n")
 
-run_verilator_test(args.input.replace(".json", "").replace("build/", ""), harness_file.replace("build/", "").replace(".cpp", ""), module.name)
+run_verilator_test(
+    args.input.replace(".json", "").replace("build/", ""),
+    harness_file.replace("build/", "").replace(".cpp", ""),
+    module.name
+)
