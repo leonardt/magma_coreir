@@ -17,7 +17,7 @@ from magma.testing.verilator import run_verilator_test
 testvectors = []
 with open(args.test_vectors, "r") as vec:
     for line in vec.readlines():
-        testvectors.append(line.split(','))
+        testvectors.append(line.rstrip().split(','))
 
 context = coreir.Context()
 module = context.load_from_file(args.input)
