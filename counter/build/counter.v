@@ -1,49 +1,5 @@
 
 
-module reg_U0 #(parameter init=16) (
-  input  clk,
-  input [0:0] in,
-  output [0:0] out
-);
-  //Wire declarations for instance 'reg0' (Module reg)
-  wire  reg0_clk;
-  wire [0:0] reg0_in;
-  wire [0:0] reg0_out;
-  coreir_reg #(.width(1)) reg0(
-    .clk(reg0_clk),
-    .in(reg0_in),
-    .out(reg0_out)
-  );
-
-  //All the connections
-  assign reg0_clk = clk;
-  assign reg0_in[0:0] = in[0:0];
-  assign out[0:0] = reg0_out[0:0];
-
-endmodule //reg_U0
-
-module coreir_add #(parameter width=16) (
-  input [width-1:0] in0,
-  input [width-1:0] in1,
-  output [width-1:0] out
-);
-  assign out = in0 + in1;
-
-endmodule //coreir_add
-
-module coreir_reg #(parameter width=16) (
-  input clk,
-  input [width-1:0] in,
-  output [width-1:0] out
-);
-reg [width-1:0] outReg;
-always @(posedge clk) begin
-  outReg <= in;
-end
-assign out = outReg;
-
-endmodule //coreir_reg
-
 module Counter4 (
   input  CLK,
   output  COUT,
@@ -157,6 +113,28 @@ module Register4 (
 
 endmodule //Register4
 
+module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module reg_U0)
+  wire [0:0] inst0_in;
+  wire  inst0_clk;
+  wire [0:0] inst0_out;
+  reg_U0 #(.init(1'd0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in[0] = I;
+  assign O = inst0_out[0];
+
+endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
+
 module Add4_cout (
   output  COUT,
   input [3:0] I0,
@@ -198,27 +176,49 @@ module Add4_cout (
 
 endmodule //Add4_cout
 
-module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O
+module reg_U0 #(parameter init=16) (
+  input  clk,
+  input [0:0] in,
+  output [0:0] out
 );
-  //Wire declarations for instance 'inst0' (Module reg_U0)
-  wire [0:0] inst0_in;
-  wire  inst0_clk;
-  wire [0:0] inst0_out;
-  reg_U0 #(.init(1'd0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out)
+  //Wire declarations for instance 'reg0' (Module reg)
+  wire  reg0_clk;
+  wire [0:0] reg0_in;
+  wire [0:0] reg0_out;
+  coreir_reg #(.width(1)) reg0(
+    .clk(reg0_clk),
+    .in(reg0_in),
+    .out(reg0_out)
   );
 
   //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in[0] = I;
-  assign O = inst0_out[0];
+  assign reg0_clk = clk;
+  assign reg0_in[0:0] = in[0:0];
+  assign out[0:0] = reg0_out[0:0];
 
-endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
+endmodule //reg_U0
+
+module coreir_reg #(parameter width=16) (
+  input clk,
+  input [width-1:0] in,
+  output [width-1:0] out
+);
+reg [width-1:0] outReg;
+always @(posedge clk) begin
+  outReg <= in;
+end
+assign out = outReg;
+
+endmodule //coreir_reg
+
+module coreir_add #(parameter width=16) (
+  input [width-1:0] in0,
+  input [width-1:0] in1,
+  output [width-1:0] out
+);
+  assign out = in0 + in1;
+
+endmodule //coreir_add
 
 module bitir_const #(parameter value=16) (
   output out

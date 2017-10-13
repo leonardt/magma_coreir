@@ -22,7 +22,7 @@ testvectors = testvectors(main, main_sim(), args.num_cycles)
 with open(args.output, "w") as vec:
     lines = []
     for outputs in testvectors:
-        for port_name, value in outputs.items():
+        for port_name, value in sorted(outputs.items()):
             vec.write(",".join(("expect", port_name, str(value))))
             vec.write("\n")
         vec.write("step, 1\n")
