@@ -18,7 +18,7 @@ name = os.path.splitext(name)[0]
 main = __import__(name).main
 main_sim = __import__(name).main_sim
 
-if isinstance(main_sim, coroutine.Coroutine):
+if isinstance(main_sim, type) and issubclass(main_sim, coroutine.Coroutine):
     testvectors = coroutine.testvectors(main, main_sim(), args.num_cycles)
     with open(args.output, "w") as vec:
         lines = []
