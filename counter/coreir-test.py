@@ -1,53 +1,26 @@
-import os, sys, getopt
+import argparse
+import subprocess
+
+parser = argparse.ArgumentParser(description='Test a <coreir_design>.json with <testvectors>.vec')
+
+parser.add_argument('-i', '--input', help=".json file from core:r", required=True)
+parser.add_argument('-t', '--test_vectors', help=".vec file with test vectors", required=True)
+args = parser.parse_args()
+
+subprocess.call(['coreir', '-i', args.input, '-o', args.input.replace('.json', '.v')])
+
 import coreir
-
-def usage():
-    print('usage: magma [-b board] [-o outputformat] file\n', file=sys.stderr)
-    print('Options', file=sys.stderr)
-    print('-h          help', file=sys.stderr)
-    print('-i design.json', file=sys.stderr)
-    print('-t design_test_vectors.vec', file=sys.stderr)
-    print('-o harness.cpp', file=sys.stderr)
-    sys.exit(1)
-
-try:
-    opts, args = getopt.getopt(sys.argv[1:], 'i:t:o:')
-except Exception as e:
-    print(e, file=sys.stderr)
-    usage()
-
-coreir_file = None
-test_vector_file = None
-for o, a in opts:
-    if o == '-h':
-        usage()
-        exit(0)
-    elif o == '-i':
-        coreir_file = a
-    elif o == '-t':
-        test_vector_file = a
-    elif o == '-o':
-        harness_file = a
-
-if coreir_file is None:
-    raise Exception("-i <coreir_file> required")
-
-if test_vector_file is None:
-    raise Exception("-t <test_vector_file> required")
-
-if harness_file is None:
-    raise Exception("-o <harness_file> required")
-
-from collections import namedtuple
 from magma.testing.verilator import run_verilator_test
 
 testvectors = []
-with open(test_vector_file, "r") as vec:
+with open(args.test_vectors, "r") as vec:
     for line in vec.readlines():
         testvectors.append(line.split(','))
 
 context = coreir.Context()
-module = context.load_from_file(coreir_file)
+module = context.load_from_file(args.input)
+
+harness_file = args.input.replace(".json", "_verilator_harness.cpp")
 
 with open(harness_file, "w") as verilator_harness:
     verilator_harness.write('''\
@@ -86,4 +59,4 @@ int main(int argc, char **argv, char **env) {{
             verilator_harness.write("    check(\"{port_name}\", top->{port_name}, {expected}, {cycle});\n".format(port_name=port_name, expected=value, cycle=cycle))
     verilator_harness.write("}\n")
 
-# run_verilator_test(base_name, "{}_verilator_harness".format(base_name), module.name)
+run_verilator_test(args.input.replace(".json", "").replace("build/", ""), harness_file.replace("build/", "").replace(".cpp", ""), module.name)
