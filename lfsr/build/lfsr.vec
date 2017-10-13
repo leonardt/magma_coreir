@@ -1,0 +1,32 @@
+expect,O,1
+step, 1
+expect,O,2
+step, 1
+expect,O,4
+step, 1
+expect,O,8
+step, 1
+expect,O,17
+step, 1
+expect,O,35
+step, 1
+expect,O,71
+step, 1
+expect,O,142
+step, 1
+expect,O,29
+step, 1
+expect,O,58
+step, 1
+expect,O,117
+step, 1
+expect,O,234
+step, 1
+expect,O,212
+step, 1
+expect,O,169
+step, 1
+expect,O,82
+step, 1
+expect,O,165
+step, 1
