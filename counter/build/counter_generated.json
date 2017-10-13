@@ -1,8 +1,43 @@
-{"top":"global.Counter4_flattened",
+{"top":"global.Counter4",
 "namespaces":{
   "global":{
     "modules":{
-      "Counter4_flattened":{
+      "Add4_cout":{
+        "type":["Record",{
+          "COUT":"Bit",
+          "I0":["Array",4,"BitIn"],
+          "I1":["Array",4,"BitIn"],
+          "O":["Array",4,"Bit"]
+        }],
+        "instances":{
+          "bit_const_GND":{
+            "modref":"corebit.const",
+            "modargs":{"value":["Bool",false]}
+          },
+          "inst0":{
+            "genref":"coreir.add",
+            "genargs":{"width":["Int",5]}
+          }
+        },
+        "connections":[
+          ["bit_const_GND.out","inst0.in0.4"],
+          ["bit_const_GND.out","inst0.in1.4"],
+          ["self.COUT","inst0.out.4"],
+          ["inst0.in0.0","self.I0.0"],
+          ["inst0.in0.1","self.I0.1"],
+          ["inst0.in0.2","self.I0.2"],
+          ["inst0.in0.3","self.I0.3"],
+          ["inst0.in1.0","self.I1.0"],
+          ["inst0.in1.1","self.I1.1"],
+          ["inst0.in1.2","self.I1.2"],
+          ["inst0.in1.3","self.I1.3"],
+          ["inst0.out.0","self.O.0"],
+          ["inst0.out.1","self.O.1"],
+          ["inst0.out.2","self.O.2"],
+          ["inst0.out.3","self.O.3"]
+        ]
+      },
+      "Counter4":{
         "type":["Record",{
           "CLK":["Named","coreir.clkIn"],
           "COUT":"Bit",
@@ -18,46 +53,75 @@
             "modargs":{"value":["Bool",true]}
           },
           "inst0":{
-            "genref":"coreir.add",
-            "genargs":{"width":["Int",5]}
+            "modref":"global.Add4_cout"
           },
           "inst1":{
-            "modref":"global.reg_U0"
-          },
-          "inst2":{
-            "modref":"global.reg_U0"
-          },
-          "inst3":{
-            "modref":"global.reg_U0"
-          },
-          "inst4":{
-            "modref":"global.reg_U0"
+            "modref":"global.Register4"
           }
         },
         "connections":[
-          ["bit_const_GND.out","inst0.in0.0"],
-          ["bit_const_GND.out","inst0.in1.0"],
-          ["bit_const_GND.out","inst0.in1.2"],
-          ["bit_const_GND.out","inst0.in1.3"],
-          ["bit_const_GND.out","inst0.in1.4"],
-          ["bit_const_VCC.out","inst0.in1.1"],
-          ["inst1.clk","self.CLK"],
-          ["inst2.clk","self.CLK"],
-          ["inst3.clk","self.CLK"],
-          ["inst4.clk","self.CLK"],
-          ["self.COUT","inst0.out.4"],
-          ["inst0.in0.1","inst1.out.0"],
-          ["inst0.in0.2","inst2.out.0"],
-          ["inst0.in0.3","inst3.out.0"],
-          ["inst0.in0.4","inst4.out.0"],
-          ["inst0.out.0","inst1.in.0"],
-          ["inst0.out.1","inst2.in.0"],
-          ["inst0.out.2","inst3.in.0"],
-          ["inst0.out.3","inst4.in.0"],
-          ["inst1.out.0","self.O.0"],
-          ["inst2.out.0","self.O.1"],
-          ["inst3.out.0","self.O.2"],
-          ["inst4.out.0","self.O.3"]
+          ["bit_const_GND.out","inst0.I1.1"],
+          ["bit_const_GND.out","inst0.I1.2"],
+          ["bit_const_GND.out","inst0.I1.3"],
+          ["bit_const_VCC.out","inst0.I1.0"],
+          ["inst0.COUT","self.COUT"],
+          ["inst0.I0","inst1.O"],
+          ["inst0.O","inst1.I"],
+          ["inst1.CLK","self.CLK"],
+          ["inst1.O","self.O"]
+        ]
+      },
+      "DFF_init0_has_ceFalse_has_resetFalse_has_setFalse":{
+        "type":["Record",{
+          "CLK":["Named","coreir.clkIn"],
+          "I":"BitIn",
+          "O":"Bit"
+        }],
+        "instances":{
+          "inst0":{
+            "modref":"global.reg_U0",
+            "modargs":{"init":[["BitVector",1],0]}
+          }
+        },
+        "connections":[
+          ["inst0.clk","self.CLK"],
+          ["self.I","inst0.in.0"],
+          ["self.O","inst0.out.0"]
+        ]
+      },
+      "Register4":{
+        "type":["Record",{
+          "CLK":["Named","coreir.clkIn"],
+          "I":["Array",4,"BitIn"],
+          "O":["Array",4,"Bit"]
+        }],
+        "instances":{
+          "inst0":{
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+          },
+          "inst1":{
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+          },
+          "inst2":{
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+          },
+          "inst3":{
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+          }
+        },
+        "connections":[
+          ["inst0.CLK","self.CLK"],
+          ["inst0.I","self.I.0"],
+          ["inst0.O","self.O.0"],
+          ["inst1.CLK","self.CLK"],
+          ["inst1.I","self.I.1"],
+          ["inst1.O","self.O.1"],
+          ["inst2.CLK","self.CLK"],
+          ["inst2.I","self.I.2"],
+          ["inst2.O","self.O.2"],
+          ["inst3.CLK","self.CLK"],
+          ["inst3.I","self.I.3"],
+          ["inst3.O","self.O.3"]
         ]
       },
       "reg_U0":{
@@ -66,6 +130,8 @@
           "clk":["Named","coreir.clkIn"],
           "out":["Array",1,"Bit"]
         }],
+        "modparams":{"init":["BitVector",1]},
+        "defaultmodargs":{"init":[["BitVector",1],0]},
         "instances":{
           "reg0":{
             "genref":"coreir.reg",

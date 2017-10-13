@@ -44,10 +44,10 @@ expect,O,14
 expect,COUT,0
 step, 1
 expect,O,15
-expect,COUT,0
+expect,COUT,1
 step, 1
 expect,O,0
-expect,COUT,1
+expect,COUT,0
 step, 1
 expect,O,1
 expect,COUT,0
@@ -92,5 +92,5 @@ expect,O,14
 expect,COUT,0
 step, 1
 expect,O,15
-expect,COUT,0
+expect,COUT,1
 step, 1
