@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+import sys, os
+import argparse
+from magma.testing.coroutine import testvectors
+
+parser = argparse.ArgumentParser(description='Generate test vectors for a magma circuit')
+
+parser.add_argument('-i', '--input', help="input magma .py file", required=True)
+parser.add_argument('-o', '--output', help="output .vec file", required=True)
+parser.add_argument('-n', '--num_cycles', type=int, help="number of cycles to test", required=True)
+args = parser.parse_args()
+
+sys.path.append(os.path.dirname(os.path.realpath(args.input)))
+
+name = os.path.basename(args.input)
+name = os.path.splitext(name)[0]
+main = __import__(name).main
+main_sim = __import__(name).main_sim
+
+
+testvectors = testvectors(main, main_sim(), args.num_cycles)
+with open(args.output, "w") as vec:
+    lines = []
+    for outputs in testvectors:
+        for port_name, value in outputs.items():
+            vec.write(",".join(("expect", port_name, str(value))))
+            vec.write("\n")
+        vec.write("step, 1\n")
