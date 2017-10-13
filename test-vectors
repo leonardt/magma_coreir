@@ -15,14 +15,21 @@ sys.path.append(os.path.dirname(os.path.realpath(args.input)))
 
 name = os.path.basename(args.input)
 name = os.path.splitext(name)[0]
-main = __import__(name).main
-main_sim = __import__(name).main_sim
+
+module = __import__(name)
+main = module.main
+main_sim = module.main_sim
 
 if isinstance(main_sim, type) and issubclass(main_sim, coroutine.Coroutine):
-    testvectors = coroutine.testvectors(main, main_sim(), args.num_cycles)
+    main_inputs = getattr(module, "main_inputs", None)
+    testvectors = coroutine.testvectors(main, main_sim(), args.num_cycles,
+            main_inputs())
     with open(args.output, "w") as vec:
         lines = []
-        for outputs in testvectors:
+        for inputs, outputs in zip(testvectors[0], testvectors[1]):
+            for port_name, value in inputs.items():
+                vec.write(",".join(("poke", port_name, str(value))))
+                vec.write("\n")
             for port_name, value in outputs.items():
                 vec.write(",".join(("expect", port_name, str(value))))
                 vec.write("\n")
