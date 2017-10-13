@@ -50,12 +50,20 @@ int main(int argc, char **argv, char **env) {{
     for test_vector in testvectors:
         command = test_vector[0]
         if command == "step":
+            num_cycles = test_vector[1]
+            if num_cycles > 1:
+                raise NotImplementedError()
             verilator_harness.write("    top->CLK = 0;\n")
             verilator_harness.write("    top->eval();\n")
             verilator_harness.write("    top->CLK = 1;\n")
             verilator_harness.write("    top->eval();\n")
             cycle += 1
-        else:
+        elif command == "poke":
+            port_name = test_vector[1]
+            value = test_vector[2]
+            verilator_harness.write("    top->{} = {};\n".format(port_name, value))
+        elif command == "expect":
+            verilator_harness.write("    top->eval();\n")
             port_name = test_vector[1]
             value = test_vector[2]
             verilator_harness.write("    check(\"{port_name}\", top->{port_name}, {expected}, {cycle});\n".format(port_name=port_name, expected=value, cycle=cycle))

@@ -6,6 +6,8 @@ PopCount8 = DefinePopCount(8)
 print(repr(PopCount8))
 main = flatten(PopCount8).circuit
 
+main_sim = lambda x: bin(x).count('1')
+
 testvectors = testvectors(main, lambda x: bin(x).count('1'))
 
 with open("build/popcount8.vec", "w") as vec:

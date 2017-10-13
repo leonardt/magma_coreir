@@ -9,155 +9,155 @@
         }],
         "instances":{
           "bit_const_GND":{
-            "modref":"coreir.bitconst",
-            "modargs":{"value":["Int",0]}
+            "modref":"corebit.const",
+            "modargs":{"value":["Bool",false]}
           },
           "inst0":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst1":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst10":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst11":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst12":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst13":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst14":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst15":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst16":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst17":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst18":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst19":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst2":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst20":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst21":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst22":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst23":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst24":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst25":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst26":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst27":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst28":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst29":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst3":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst30":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst31":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst32":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst33":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst34":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst35":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst36":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst37":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst38":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst39":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst4":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst40":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst41":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst42":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst43":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst44":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst45":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst46":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           },
           "inst47":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst48":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst5":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst6":{
-            "modref":"coreir.bitor"
+            "modref":"corebit.or"
           },
           "inst7":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst8":{
-            "modref":"coreir.bitxor"
+            "modref":"corebit.xor"
           },
           "inst9":{
-            "modref":"coreir.bitand"
+            "modref":"corebit.and"
           }
         },
         "connections":[
