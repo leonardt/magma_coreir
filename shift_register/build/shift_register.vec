@@ -1,5 +1,38 @@
+poke,I,0
+expect,O,0
+step, 1
+poke,I,0
+expect,O,0
+step, 1
 poke,I,1
 expect,O,0
+step, 1
+poke,I,0
+expect,O,0
+step, 1
+poke,I,1
+expect,O,0
+step, 1
+poke,I,1
+expect,O,0
+step, 1
+poke,I,1
+expect,O,1
+step, 1
+poke,I,1
+expect,O,0
+step, 1
+poke,I,0
+expect,O,1
+step, 1
+poke,I,0
+expect,O,1
+step, 1
+poke,I,0
+expect,O,1
+step, 1
+poke,I,1
+expect,O,1
 step, 1
 poke,I,0
 expect,O,0
@@ -12,13 +45,4 @@ expect,O,0
 step, 1
 poke,I,1
 expect,O,1
-step, 1
-poke,I,1
-expect,O,0
-step, 1
-poke,I,1
-expect,O,0
-step, 1
-poke,I,1
-expect,O,0
 step, 1
