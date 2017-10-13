@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **env) {{
     for test_vector in testvectors:
         command = test_vector[0]
         if command == "step":
-            num_cycles = test_vector[1]
+            num_cycles = int(test_vector[1])
             if num_cycles > 1:
                 raise NotImplementedError()
             verilator_harness.write("    top->CLK = 0;\n")
