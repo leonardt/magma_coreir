@@ -1,26 +1,34 @@
 #!/bin/bash
 
+# export PYTHONPATH=$PWD/../magma:$PYTHONPATH
+# export PYTHONPATH=$PWD/../mantle:$PYTHONPATH
+# export PYTHONPATH=$PWD/../pycoreir:$PYTHONPATH
+
 set -e
 
+TEST="counter"
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 export MANTLE="coreir"
-echo "Running magma to generate coreir .json"
-magma -o coreir -m coreir counter.py
+echo -e "Running magma to generate coreir .json"
+../magma/bin/magma -o coreir -m coreir $TEST.py
 
-echo "Running coreir to convert .json circuit to .v (verilog)"
-coreir -i build/counter.json -o build/counter.v
+echo -e "Running coreir to convert .json circuit to .v (verilog)"
+coreir -i build/$TEST.json -o build/$TEST.v
 
-echo "Generating test vectors from silica"
-../test-vectors -i counter.py -o build/counter.vec -n 32
+echo -e "Generating test vectors from silica"
+../test-vectors -i $TEST.py -o build/$TEST.vec -n 32
 
-echo "Running verilator test"
-../coreir-test -i build/counter.json -t build/counter.vec
+echo -e "Running verilator test"
+../coreir-test -i build/$TEST.json -t build/$TEST.vec
 
-echo "PASSED (magma->coreir->verilog + verilator)"
+echo -e "${GREEN}PASSED (magma->coreir->verilog + verilator)${NC}"
 
-echo "Running coreir to convert .json circuit to .fir (firrtl)"
-coreir -i build/counter.json -o build/counter.fir
+echo -e "Running coreir to convert .json circuit to .fir (firrtl)"
+coreir -i build/$TEST.json -o build/$TEST.fir
 
-echo "Running firrtl-interpreter test"
-../firrtl-interpreter/run-test-vec.sh -f build/counter.fir -tv build/counter.vec -so
+echo -e "Running firrtl-interpreter test"
+../firrtl-interpreter/run-test-vec.sh -f build/$TEST.fir -tv build/$TEST.vec -so
 
-echo "PASSED (magma->coreir->firrtl + firrtl-interpreter)"
+echo -e "${GREEN}PASSED (magma->coreir->firrtl + firrtl-interpreter)${NC}"
