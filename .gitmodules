@@ -13,3 +13,6 @@
 [submodule "pycoreir"]
 	path = pycoreir
 	url = git@github.com:leonardt/pycoreir.git
+[submodule "firrtl"]
+	path = firrtl
+	url = https://github.com/freechipsproject/firrtl
