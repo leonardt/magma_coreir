@@ -1,0 +1,37 @@
+poke, reset,1
+step, 1
+poke, reset, 0
+poke, io_en, 1
+step, 1
+expect, io_state, 14
+step, 1
+expect, io_state, 12
+step, 1
+expect, io_state, 8
+step, 1
+expect, io_state, 1
+step, 1
+expect, io_state, 2
+step, 1
+expect, io_state, 4
+step, 1
+expect, io_state, 9
+step, 1
+expect, io_state, 3
+step, 1
+expect, io_state, 6
+step, 1
+expect, io_state, 13
+step, 1
+expect, io_state, 10
+step, 1
+expect, io_state, 5
+step, 1
+expect, io_state, 11
+step, 1
+expect, io_state, 7
+step, 1
+expect, io_state, 15
+step, 1
+expect, io_state, 14
+
