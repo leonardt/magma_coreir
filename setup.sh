@@ -3,9 +3,12 @@
 git submodule init
 git submodule update
 
+pip install -e magma
+pip install -e mantle
+pip install -e pycoreir
+
 cd coreir
-make build
-make coreir
+make install
 cd ..
 
 cd firrtl
