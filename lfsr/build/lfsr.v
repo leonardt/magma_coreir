@@ -1,5 +1,27 @@
 
 
+module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module reg_U0)
+  wire [0:0] inst0_in;
+  wire  inst0_clk;
+  wire [0:0] inst0_out;
+  reg_U0 #(.init(1'd0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in[0] = I;
+  assign O = inst0_out[0];
+
+endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
+
 module SIPO8_0001 (
   input  CLK,
   input  I,
@@ -113,50 +135,6 @@ module SIPO8_0001 (
 
 endmodule //SIPO8_0001
 
-module DFF_init1_has_ceFalse_has_resetFalse_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module reg_U0)
-  wire [0:0] inst0_in;
-  wire  inst0_clk;
-  wire [0:0] inst0_out;
-  reg_U0 #(.init(1'd1)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in[0] = I;
-  assign O = inst0_out[0];
-
-endmodule //DFF_init1_has_ceFalse_has_resetFalse_has_setFalse
-
-module reg_U0 #(parameter init=1) (
-  input  clk,
-  input [0:0] in,
-  output [0:0] out
-);
-  //Wire declarations for instance 'reg0' (Module coreir_reg)
-  wire  reg0_clk;
-  wire [0:0] reg0_in;
-  wire [0:0] reg0_out;
-  coreir_reg #(.init(init),.width(1)) reg0(
-    .clk(reg0_clk),
-    .in(reg0_in),
-    .out(reg0_out)
-  );
-
-  //All the connections
-  assign reg0_clk = clk;
-  assign reg0_in[0:0] = in[0:0];
-  assign out[0:0] = reg0_out[0:0];
-
-endmodule //reg_U0
-
 module xor_wrapped (
   input  I0,
   input  I1,
@@ -178,19 +156,6 @@ module xor_wrapped (
   assign O = inst0_out;
 
 endmodule //xor_wrapped
-
-module coreir_reg #(parameter init=1, parameter width=1) (
-  input clk,
-  input [width-1:0] in,
-  output [width-1:0] out
-);
-reg [width-1:0] outReg=init;
-always @(posedge clk) begin
-  outReg <= in;
-end
-assign out = outReg;
-
-endmodule //coreir_reg
 
 module fold_xor4None (
   input  I0,
@@ -240,6 +205,41 @@ module fold_xor4None (
 
 endmodule //fold_xor4None
 
+module DFF_init1_has_ceFalse_has_resetFalse_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module reg_U0)
+  wire [0:0] inst0_in;
+  wire  inst0_clk;
+  wire [0:0] inst0_out;
+  reg_U0 #(.init(1'd1)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in[0] = I;
+  assign O = inst0_out[0];
+
+endmodule //DFF_init1_has_ceFalse_has_resetFalse_has_setFalse
+
+module coreir_reg #(parameter init=1, parameter width=1) (
+  input clk,
+  input [width-1:0] in,
+  output [width-1:0] out
+);
+reg [width-1:0] outReg=init;
+always @(posedge clk) begin
+  outReg <= in;
+end
+assign out = outReg;
+
+endmodule //coreir_reg
+
 module lfsr81False (
   input  CLK,
   output [7:0] O
@@ -279,27 +279,27 @@ module lfsr81False (
 
 endmodule //lfsr81False
 
-module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O
+module reg_U0 #(parameter init=1) (
+  input  clk,
+  input [0:0] in,
+  output [0:0] out
 );
-  //Wire declarations for instance 'inst0' (Module reg_U0)
-  wire [0:0] inst0_in;
-  wire  inst0_clk;
-  wire [0:0] inst0_out;
-  reg_U0 #(.init(1'd0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out)
+  //Wire declarations for instance 'reg0' (Module coreir_reg)
+  wire  reg0_clk;
+  wire [0:0] reg0_in;
+  wire [0:0] reg0_out;
+  coreir_reg #(.init(init),.width(1)) reg0(
+    .clk(reg0_clk),
+    .in(reg0_in),
+    .out(reg0_out)
   );
 
   //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in[0] = I;
-  assign O = inst0_out[0];
+  assign reg0_clk = clk;
+  assign reg0_in[0:0] = in[0:0];
+  assign out[0:0] = reg0_out[0:0];
 
-endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
+endmodule //reg_U0
 
 module corebit_xor (
   input in0,

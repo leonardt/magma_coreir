@@ -15,11 +15,10 @@ def lfsr_sim_factory(N, init=1):
         while True:
             O = seq2int(regs)
             yield O
-            I = regs[-1]
+            I = 0
             for tap in taps:
                 I ^= regs[tap - 1]
-            regs.pop()
-            regs.insert(0, I)
+            regs = [I] + regs[:-1]
     return lfsr_sim
 
 main_sim = lfsr_sim_factory(8)
