@@ -1,0 +1,27 @@
+poke, reset, 1
+step, 1
+poke, reset, 0
+expect, io_count, 0
+poke, io_enabled, 1
+step, 1
+expect, io_count, 1
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 2
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 3
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 4
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 5
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 6
+expect, io_wrapped, 0
+step, 1
+expect, io_count, 0
+expect, io_wrapped, 1
+
