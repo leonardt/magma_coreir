@@ -1,3 +1,3 @@
-Example magma circuits using the coreir backend
+Magma, coreir, firrtl interop tests.
 
-**NOTE:** Currently depends on the `firrtl` branches of coreir, mantle, and magma
+**NOTE:** Currently depends on the `firrtl` branches of coreir, pycoreir, mantle, and magma
