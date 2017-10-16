@@ -1,64 +1,96 @@
-expect,O,1
+poke,RESET,0
+expect,O,0
 step, 1
-expect,O,2
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,4
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,8
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,17
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,35
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,71
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,142
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,28
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,56
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,113
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,226
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,196
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,137
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,18
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,37
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,75
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,151
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,46
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,92
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,184
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,112
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,224
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,192
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,129
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,3
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,6
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,12
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,25
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,50
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,100
+poke,RESET,1
+expect,O,0
 step, 1
-expect,O,201
+poke,RESET,1
+expect,O,0
 step, 1
