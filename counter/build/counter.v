@@ -1,90 +1,5 @@
 
 
-module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module reg_U0)
-  wire [0:0] inst0_in;
-  wire  inst0_clk;
-  wire [0:0] inst0_out;
-  reg_U0 #(.init(1'd0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in[0] = I;
-  assign O = inst0_out[0];
-
-endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
-
-module reg_U0 #(parameter init=16) (
-  input  clk,
-  input [0:0] in,
-  output [0:0] out
-);
-  //Wire declarations for instance 'reg0' (Module reg)
-  wire  reg0_clk;
-  wire [0:0] reg0_in;
-  wire [0:0] reg0_out;
-  coreir_reg #(.width(1)) reg0(
-    .clk(reg0_clk),
-    .in(reg0_in),
-    .out(reg0_out)
-  );
-
-  //All the connections
-  assign reg0_clk = clk;
-  assign reg0_in[0:0] = in[0:0];
-  assign out[0:0] = reg0_out[0:0];
-
-endmodule //reg_U0
-
-module Add4_cout (
-  output  COUT,
-  input [3:0] I0,
-  input [3:0] I1,
-  output [3:0] O
-);
-  //Wire declarations for instance 'bit_const_GND' (Module const)
-  wire  bit_const_GND_out;
-  bitir_const #(.value(0)) bit_const_GND(
-    .out(bit_const_GND_out)
-  );
-
-  //Wire declarations for instance 'inst0' (Module add)
-  wire [4:0] inst0_in0;
-  wire [4:0] inst0_out;
-  wire [4:0] inst0_in1;
-  coreir_add #(.width(5)) inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0[4] = bit_const_GND_out;
-  assign inst0_in1[4] = bit_const_GND_out;
-  assign COUT = inst0_out[4];
-  assign inst0_in0[0] = I0[0];
-  assign inst0_in0[1] = I0[1];
-  assign inst0_in0[2] = I0[2];
-  assign inst0_in0[3] = I0[3];
-  assign inst0_in1[0] = I1[0];
-  assign inst0_in1[1] = I1[1];
-  assign inst0_in1[2] = I1[2];
-  assign inst0_in1[3] = I1[3];
-  assign O[0] = inst0_out[0];
-  assign O[1] = inst0_out[1];
-  assign O[2] = inst0_out[2];
-  assign O[3] = inst0_out[3];
-
-endmodule //Add4_cout
-
 module Register4 (
   input  CLK,
   input [3:0] I,
@@ -146,16 +61,58 @@ module Register4 (
 
 endmodule //Register4
 
-module coreir_add #(parameter width=16) (
-  input [width-1:0] in0,
-  input [width-1:0] in1,
-  output [width-1:0] out
+module reg_U1 #(parameter init=1) (
+  input  clk,
+  input [0:0] in,
+  output [0:0] out
 );
-  assign out = in0 + in1;
+  //Wire declarations for instance 'reg0' (Module coreir_reg)
+  wire  reg0_clk;
+  wire [0:0] reg0_in;
+  wire [0:0] reg0_out;
+  coreir_reg #(.width(1)) reg0(
+    .clk(reg0_clk),
+    .in(reg0_in),
+    .out(reg0_out)
+  );
 
-endmodule //coreir_add
+  //All the connections
+  assign reg0_clk = clk;
+  assign reg0_in[0:0] = in[0:0];
+  assign out[0:0] = reg0_out[0:0];
 
-module coreir_reg #(parameter width=16) (
+endmodule //reg_U1
+
+module DFF_init0_has_ceFalse_has_resetFalse_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module reg_U1)
+  wire [0:0] inst0_in;
+  wire  inst0_clk;
+  wire [0:0] inst0_out;
+  reg_U1 #(.init(1'd0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in[0] = I;
+  assign O = inst0_out[0];
+
+endmodule //DFF_init0_has_ceFalse_has_resetFalse_has_setFalse
+
+module corebit_const #(parameter value=1) (
+  output out
+);
+  assign out = value;
+
+endmodule //corebit_const
+
+module coreir_reg #(parameter width=1) (
   input clk,
   input [width-1:0] in,
   output [width-1:0] out
@@ -168,20 +125,61 @@ assign out = outReg;
 
 endmodule //coreir_reg
 
+module Add4_cout (
+  output  COUT,
+  input [3:0] I0,
+  input [3:0] I1,
+  output [3:0] O
+);
+  //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
+  wire  bit_const_GND_out;
+  corebit_const #(.value(0)) bit_const_GND(
+    .out(bit_const_GND_out)
+  );
+
+  //Wire declarations for instance 'inst0' (Module coreir_add)
+  wire [4:0] inst0_in0;
+  wire [4:0] inst0_out;
+  wire [4:0] inst0_in1;
+  coreir_add #(.width(5)) inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0[4] = bit_const_GND_out;
+  assign inst0_in1[4] = bit_const_GND_out;
+  assign COUT = inst0_out[4];
+  assign inst0_in0[0] = I0[0];
+  assign inst0_in0[1] = I0[1];
+  assign inst0_in0[2] = I0[2];
+  assign inst0_in0[3] = I0[3];
+  assign inst0_in1[0] = I1[0];
+  assign inst0_in1[1] = I1[1];
+  assign inst0_in1[2] = I1[2];
+  assign inst0_in1[3] = I1[3];
+  assign O[0] = inst0_out[0];
+  assign O[1] = inst0_out[1];
+  assign O[2] = inst0_out[2];
+  assign O[3] = inst0_out[3];
+
+endmodule //Add4_cout
+
 module Counter4 (
   input  CLK,
   output  COUT,
   output [3:0] O
 );
-  //Wire declarations for instance 'bit_const_GND' (Module const)
+  //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
   wire  bit_const_GND_out;
-  bitir_const #(.value(0)) bit_const_GND(
+  corebit_const #(.value(0)) bit_const_GND(
     .out(bit_const_GND_out)
   );
 
-  //Wire declarations for instance 'bit_const_VCC' (Module const)
+  //Wire declarations for instance 'bit_const_VCC' (Module corebit_const)
   wire  bit_const_VCC_out;
-  bitir_const #(.value(1)) bit_const_VCC(
+  corebit_const #(.value(1)) bit_const_VCC(
     .out(bit_const_VCC_out)
   );
 
@@ -220,9 +218,11 @@ module Counter4 (
 
 endmodule //Counter4
 
-module bitir_const #(parameter value=16) (
-  output out
+module coreir_add #(parameter width=1) (
+  input [width-1:0] in0,
+  input [width-1:0] in1,
+  output [width-1:0] out
 );
-  assign out = value;
+  assign out = in0 + in1;
 
-endmodule //bitir_const
+endmodule //coreir_add
