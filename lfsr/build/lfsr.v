@@ -9,6 +9,15 @@ module corebit_concat (
 
 endmodule //corebit_concat
 
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -32,111 +41,6 @@ module corebit_xor (
   assign out = in0 ^ in1;
 
 endmodule //corebit_xor
-
-module xor_wrapped (
-  input  I0,
-  input  I1,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module corebit_xor)
-  wire  inst0_in0;
-  wire  inst0_out;
-  wire  inst0_in1;
-  corebit_xor inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0 = I0;
-  assign inst0_in1 = I1;
-  assign O = inst0_out;
-
-endmodule //xor_wrapped
-
-module fold_xor4None (
-  input  I0,
-  input  I1,
-  input  I2,
-  input  I3,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module xor_wrapped)
-  wire  inst0_I0;
-  wire  inst0_I1;
-  wire  inst0_O;
-  xor_wrapped inst0(
-    .I0(inst0_I0),
-    .I1(inst0_I1),
-    .O(inst0_O)
-  );
-
-  //Wire declarations for instance 'inst1' (Module xor_wrapped)
-  wire  inst1_I0;
-  wire  inst1_I1;
-  wire  inst1_O;
-  xor_wrapped inst1(
-    .I0(inst1_I0),
-    .I1(inst1_I1),
-    .O(inst1_O)
-  );
-
-  //Wire declarations for instance 'inst2' (Module xor_wrapped)
-  wire  inst2_I0;
-  wire  inst2_I1;
-  wire  inst2_O;
-  xor_wrapped inst2(
-    .I0(inst2_I0),
-    .I1(inst2_I1),
-    .O(inst2_O)
-  );
-
-  //All the connections
-  assign inst0_I0 = I0;
-  assign inst0_I1 = I1;
-  assign inst1_I0 = inst0_O;
-  assign inst1_I1 = I2;
-  assign inst2_I0 = inst1_O;
-  assign inst2_I1 = I3;
-  assign O = inst2_O;
-
-endmodule //fold_xor4None
-
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
-module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O,
-  input  RESET
-);
-  //Wire declarations for instance 'inst0' (Module dff)
-  wire  inst0_clk;
-  wire  inst0_rst;
-  wire  inst0_in;
-  wire  inst0_out;
-  dff #(.init(1)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out),
-    .rst(inst0_rst)
-  );
-
-  //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in = I;
-  assign O = inst0_out;
-  assign inst0_rst = RESET;
-
-endmodule //DFF_init1_has_ceFalse_has_resetTrue_has_setFalse
 
 module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   input  CLK,
@@ -163,6 +67,32 @@ module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   assign inst0_rst = RESET;
 
 endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
+
+module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O,
+  input  RESET
+);
+  //Wire declarations for instance 'inst0' (Module dff)
+  wire  inst0_clk;
+  wire  inst0_rst;
+  wire  inst0_in;
+  wire  inst0_out;
+  dff #(.init(1)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out),
+    .rst(inst0_rst)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in = I;
+  assign O = inst0_out;
+  assign inst0_rst = RESET;
+
+endmodule //DFF_init1_has_ceFalse_has_resetTrue_has_setFalse
 
 module SIPO8R_0001 (
   input  CLK,
@@ -378,6 +308,76 @@ module SIPO8R_0001 (
   assign inst7_RESET = RESET;
 
 endmodule //SIPO8R_0001
+
+module xor_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_xor)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_xor inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //xor_wrapped
+
+module fold_xor4None (
+  input  I0,
+  input  I1,
+  input  I2,
+  input  I3,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module xor_wrapped)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_O;
+  xor_wrapped inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .O(inst0_O)
+  );
+
+  //Wire declarations for instance 'inst1' (Module xor_wrapped)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_O;
+  xor_wrapped inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .O(inst1_O)
+  );
+
+  //Wire declarations for instance 'inst2' (Module xor_wrapped)
+  wire  inst2_I0;
+  wire  inst2_I1;
+  wire  inst2_O;
+  xor_wrapped inst2(
+    .I0(inst2_I0),
+    .I1(inst2_I1),
+    .O(inst2_O)
+  );
+
+  //All the connections
+  assign inst0_I0 = I0;
+  assign inst0_I1 = I1;
+  assign inst1_I0 = inst0_O;
+  assign inst1_I1 = I2;
+  assign inst2_I0 = inst1_O;
+  assign inst2_I1 = I3;
+  assign O = inst2_O;
+
+endmodule //fold_xor4None
 
 module lfsr81False (
   input  CLK,

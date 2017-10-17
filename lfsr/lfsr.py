@@ -6,7 +6,7 @@ from magma.bitutils import seq2int, int2seq
 import random
 
 main = DefineLFSR(8)
-print(repr(main))
+# print(repr(main))
 
 def lfsr_sim_factory(N, init=1):
     taps = _lfsrtaps[N]

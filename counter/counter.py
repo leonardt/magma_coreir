@@ -3,7 +3,7 @@ from magma.transforms import flatten
 from magma.testing.coroutine import coroutine, testvectors
 
 main = DefineCounter(4, cout=False, has_reset=True)
-print(repr(main))
+# print(repr(main))
 
 
 def counter_sim_factory(N):

@@ -4,10 +4,6 @@ circuit Counter4R :
     output out : UInt<2>
     input in1 : UInt<1>
     out <= cat(in0,in1)
-  module corebit_const :
-    input value : UInt<1>
-    output out : UInt<1>
-    out <= value
   module corebit_dff :
     input init : UInt<1>
     input clk : Clock
@@ -29,11 +25,28 @@ circuit Counter4R :
     inst0.in <= I
     O <= inst0.out
     inst0.rst <= RESET
+  module coreir_add_U0 :
+    input in0 : UInt<4>
+    output out : UInt<4>
+    input in1 : UInt<4>
+    out <= tail(add(in0,in1),1)
   module coreir_concat_U1 :
     input in0 : UInt<2>
     output out : UInt<4>
     input in1 : UInt<2>
     out <= cat(in0,in1)
+  module corebit_const :
+    input value : UInt<1>
+    output out : UInt<1>
+    out <= value
+  module Add4 :
+    input I0 : UInt<4>
+    input I1 : UInt<4>
+    output O : UInt<4>
+    inst inst0 of coreir_add_U0
+    inst0.in0 <= I0
+    inst0.in1 <= I1
+    O <= inst0.out
   module Register4R :
     input CLK : Clock
     input I : UInt<4>
@@ -73,19 +86,6 @@ circuit Counter4R :
     tmpidx_U5 <= bits(I,3,3)
     inst3.I <= tmpidx_U5
     inst3.RESET <= RESET
-  module coreir_add_U0 :
-    input in0 : UInt<4>
-    output out : UInt<4>
-    input in1 : UInt<4>
-    out <= tail(add(in0,in1),1)
-  module Add4 :
-    input I0 : UInt<4>
-    input I1 : UInt<4>
-    output O : UInt<4>
-    inst inst0 of coreir_add_U0
-    inst0.in0 <= I0
-    inst0.in1 <= I1
-    O <= inst0.out
   module Counter4R :
     input CLK : Clock
     output O : UInt<4>

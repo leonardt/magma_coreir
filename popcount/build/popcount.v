@@ -1,5 +1,14 @@
 
 
+module corebit_and (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 & in1;
+
+endmodule //corebit_and
+
 module corebit_concat (
   input in0,
   input in1,
@@ -15,33 +24,6 @@ module corebit_const #(parameter value=1) (
   assign out = value;
 
 endmodule //corebit_const
-
-module corebit_or (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 | in1;
-
-endmodule //corebit_or
-
-module corebit_and (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 & in1;
-
-endmodule //corebit_and
-
-module corebit_xor (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 ^ in1;
-
-endmodule //corebit_xor
 
 module coreir_concat #(parameter width0=1, parameter width1=1) (
   input [width0-1:0] in0,
@@ -73,6 +55,24 @@ module and_wrapped (
   assign O = inst0_out;
 
 endmodule //and_wrapped
+
+module corebit_or (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 | in1;
+
+endmodule //corebit_or
+
+module corebit_xor (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 ^ in1;
+
+endmodule //corebit_xor
 
 module or_wrapped (
   input  I0,

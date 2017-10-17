@@ -9,6 +9,22 @@ module corebit_concat (
 
 endmodule //corebit_concat
 
+module coreir_add #(parameter width=1) (
+  input [width-1:0] in0,
+  input [width-1:0] in1,
+  output [width-1:0] out
+);
+  assign out = in0 + in1;
+
+endmodule //coreir_add
+
+module corebit_const #(parameter value=1) (
+  output out
+);
+  assign out = value;
+
+endmodule //corebit_const
+
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -33,12 +49,27 @@ module coreir_concat #(parameter width0=1, parameter width1=1) (
 
 endmodule //coreir_concat
 
-module corebit_const #(parameter value=1) (
-  output out
+module Add4 (
+  input [3:0] I0,
+  input [3:0] I1,
+  output [3:0] O
 );
-  assign out = value;
+  //Wire declarations for instance 'inst0' (Module coreir_add)
+  wire [3:0] inst0_in0;
+  wire [3:0] inst0_out;
+  wire [3:0] inst0_in1;
+  coreir_add #(.width(4)) inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
 
-endmodule //corebit_const
+  //All the connections
+  assign inst0_in0[3:0] = I0[3:0];
+  assign inst0_in1[3:0] = I1[3:0];
+  assign O[3:0] = inst0_out[3:0];
+
+endmodule //Add4
 
 module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   input  CLK,
@@ -65,37 +96,6 @@ module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   assign inst0_rst = RESET;
 
 endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
-
-module coreir_add #(parameter width=1) (
-  input [width-1:0] in0,
-  input [width-1:0] in1,
-  output [width-1:0] out
-);
-  assign out = in0 + in1;
-
-endmodule //coreir_add
-
-module Add4 (
-  input [3:0] I0,
-  input [3:0] I1,
-  output [3:0] O
-);
-  //Wire declarations for instance 'inst0' (Module coreir_add)
-  wire [3:0] inst0_in0;
-  wire [3:0] inst0_out;
-  wire [3:0] inst0_in1;
-  coreir_add #(.width(4)) inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0[3:0] = I0[3:0];
-  assign inst0_in1[3:0] = I1[3:0];
-  assign O[3:0] = inst0_out[3:0];
-
-endmodule //Add4
 
 module Register4R (
   input  CLK,

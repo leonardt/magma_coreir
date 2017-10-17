@@ -4,30 +4,26 @@ circuit PopCount8 :
     output out : UInt<1>
     input in1 : UInt<1>
     out <= and(in0,in1)
-  module corebit_xor :
-    input in0 : UInt<1>
-    output out : UInt<1>
-    input in1 : UInt<1>
-    out <= xor(in0,in1)
-  module corebit_concat :
-    input in0 : UInt<1>
-    output out : UInt<2>
-    input in1 : UInt<1>
-    out <= cat(in0,in1)
-  module corebit_const :
-    input value : UInt<1>
-    output out : UInt<1>
-    out <= value
-  module coreir_concat_U0 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
-    out <= cat(in0,in1)
   module corebit_or :
     input in0 : UInt<1>
     output out : UInt<1>
     input in1 : UInt<1>
     out <= or(in0,in1)
+  module corebit_concat :
+    input in0 : UInt<1>
+    output out : UInt<2>
+    input in1 : UInt<1>
+    out <= cat(in0,in1)
+  module corebit_xor :
+    input in0 : UInt<1>
+    output out : UInt<1>
+    input in1 : UInt<1>
+    out <= xor(in0,in1)
+  module coreir_concat_U0 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
+    out <= cat(in0,in1)
   module and_wrapped :
     input I0 : UInt<1>
     input I1 : UInt<1>
@@ -36,6 +32,10 @@ circuit PopCount8 :
     inst0.in0 <= I0
     inst0.in1 <= I1
     O <= inst0.out
+  module corebit_const :
+    input value : UInt<1>
+    output out : UInt<1>
+    out <= value
   module or_wrapped :
     input I0 : UInt<1>
     input I1 : UInt<1>
@@ -44,26 +44,6 @@ circuit PopCount8 :
     inst0.in0 <= I0
     inst0.in1 <= I1
     O <= inst0.out
-  module xor_wrapped :
-    input I0 : UInt<1>
-    input I1 : UInt<1>
-    output O : UInt<1>
-    inst inst0 of corebit_xor
-    inst0.in0 <= I0
-    inst0.in1 <= I1
-    O <= inst0.out
-  module fold_xor3None :
-    input I0 : UInt<1>
-    input I1 : UInt<1>
-    input I2 : UInt<1>
-    output O : UInt<1>
-    inst inst0 of xor_wrapped
-    inst inst1 of xor_wrapped
-    inst0.I0 <= I0
-    inst0.I1 <= I1
-    inst1.I0 <= inst0.O
-    inst1.I1 <= I2
-    O <= inst1.O
   module fold_or3None :
     input I0 : UInt<1>
     input I1 : UInt<1>
@@ -95,6 +75,26 @@ circuit PopCount8 :
     inst2.I1 <= I0
     inst3.I2 <= inst2.O
     O <= inst3.O
+  module xor_wrapped :
+    input I0 : UInt<1>
+    input I1 : UInt<1>
+    output O : UInt<1>
+    inst inst0 of corebit_xor
+    inst0.in0 <= I0
+    inst0.in1 <= I1
+    O <= inst0.out
+  module fold_xor3None :
+    input I0 : UInt<1>
+    input I1 : UInt<1>
+    input I2 : UInt<1>
+    output O : UInt<1>
+    inst inst0 of xor_wrapped
+    inst inst1 of xor_wrapped
+    inst0.I0 <= I0
+    inst0.I1 <= I1
+    inst1.I0 <= inst0.O
+    inst1.I1 <= I2
+    O <= inst1.O
   module PopCount8 :
     input I : UInt<8>
     output O : UInt<4>
