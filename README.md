@@ -1,6 +1,6 @@
 Magma, coreir, firrtl interop tests.
 
-**NOTE:** Currently depends on the `firrtl` branches of coreir, pycoreir, mantle, and magma
+**NOTE:** Currently depends on the `firrtl` branches of coreir, pycoreir, mantle, and magma, and the `coreir` branch of firrtl.
 
 # Setup
 ```
