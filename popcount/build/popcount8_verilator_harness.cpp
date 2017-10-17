@@ -1,4 +1,4 @@
-#include "VPopCount8_flattened.h"
+#include "VPopCount8.h"
 #include "verilated.h"
 #include <cassert>
 #include <iostream>
@@ -15,7 +15,7 @@ void check(const char* port, int a, int b, int cycle) {
 
 int main(int argc, char **argv, char **env) {
     Verilated::commandArgs(argc, argv);
-    VPopCount8_flattened* top = new VPopCount8_flattened;
+    VPopCount8* top = new VPopCount8;
     top-> I =  0;
     top->eval();
     check(" O", top-> O,  0, 0);

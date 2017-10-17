@@ -2,6 +2,7 @@
 
 import argparse
 import subprocess
+import ctypes
 
 parser = argparse.ArgumentParser(description='Test a <coreir_design>.json with <testvectors>.vec')
 
@@ -46,10 +47,22 @@ int main(int argc, char **argv, char **env) {{
     V{name}* top = new V{name};
 '''.format(name=module.name))
 
+    module_type = module.definition.interface.type
+    assert isinstance(module_type, coreir.type.Type)
+    module_type = coreir.type.Record(module_type.ptr, module_type.context)
+    clock = None
+    for key, value in module_type.items():
+        if value.kind == "Named" and coreir.NamedType(value.ptr, value.context).name == "coreir.clk":
+            if clock is not None:
+                raise NotImplementedError("Multiple clocks")
+            clock = key
+
     cycle = 0
     for test_vector in testvectors:
         command = test_vector[0]
         if command == "step":
+            if clock is None:
+                raise Exception("Step called for a circuit without a clock")
             num_cycles = int(test_vector[1])
             if num_cycles > 1:
                 raise NotImplementedError()
