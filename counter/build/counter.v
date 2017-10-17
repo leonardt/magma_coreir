@@ -1,5 +1,30 @@
 
 
+module corebit_concat (
+  input in0,
+  input in1,
+  output [1:0] out
+);
+  assign out = {in0, in1};
+
+endmodule //corebit_concat
+
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
+module corebit_const #(parameter value=1) (
+  output out
+);
+  assign out = value;
+
+endmodule //corebit_const
+
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -15,22 +40,6 @@ assign out = outReg;
 
 endmodule //dff
 
-module corebit_const #(parameter value=1) (
-  output out
-);
-  assign out = value;
-
-endmodule //corebit_const
-
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
 module coreir_add #(parameter width=1) (
   input [width-1:0] in0,
   input [width-1:0] in1,
@@ -39,15 +48,6 @@ module coreir_add #(parameter width=1) (
   assign out = in0 + in1;
 
 endmodule //coreir_add
-
-module corebit_concat (
-  input in0,
-  input in1,
-  output [1:0] out
-);
-  assign out = {in0, in1};
-
-endmodule //corebit_concat
 
 module Add4 (
   input [3:0] I0,
