@@ -1,13 +1,12 @@
-{"top":"global.SISO4R",
+{"top":"global.SISO4",
 "namespaces":{
   "global":{
     "modules":{
-      "DFF_init0_has_ceFalse_has_resetTrue_has_setFalse":{
+      "DFF_init0_has_ceFalse_has_resetFalse_has_setFalse":{
         "type":["Record",{
           "I":"BitIn",
           "O":"Bit",
-          "CLK":["Named","coreir.clkIn"],
-          "RESET":["Named","coreir.rstIn"]
+          "CLK":["Named","coreir.clkIn"]
         }],
         "instances":{
           "inst0":{
@@ -18,45 +17,39 @@
         "connections":[
           ["inst0.clk","self.CLK"],
           ["inst0.in","self.I"],
-          ["inst0.out","self.O"],
-          ["inst0.rst","self.RESET"]
+          ["inst0.out","self.O"]
         ]
       },
-      "SISO4R":{
+      "SISO4":{
         "type":["Record",{
           "I":"BitIn",
           "O":"Bit",
-          "CLK":["Named","coreir.clkIn"],
-          "RESET":["Named","coreir.rstIn"]
+          "CLK":["Named","coreir.clkIn"]
         }],
         "instances":{
           "inst0":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
           },
           "inst1":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
           },
           "inst2":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
           },
           "inst3":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
           }
         },
         "connections":[
           ["inst0.CLK","self.CLK"],
           ["inst0.I","self.I"],
           ["inst0.O","inst1.I"],
-          ["inst0.RESET","self.RESET"],
           ["inst1.CLK","self.CLK"],
           ["inst1.O","inst2.I"],
-          ["inst1.RESET","self.RESET"],
           ["inst2.CLK","self.CLK"],
           ["inst2.O","inst3.I"],
-          ["inst2.RESET","self.RESET"],
           ["inst3.CLK","self.CLK"],
-          ["inst3.O","self.O"],
-          ["inst3.RESET","self.RESET"]
+          ["inst3.O","self.O"]
         ]
       }
     }

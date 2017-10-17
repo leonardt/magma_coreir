@@ -13,7 +13,7 @@ def counter_sim_factory(N):
             O = 0
             for i in range(1, 1 << N):
                 inputs = yield O
-                if not inputs["RESET"]:
+                if inputs["RESET"] == 1:
                     break
                 O = i
             else:
@@ -25,7 +25,5 @@ main_sim = counter_sim_factory(4)
 @coroutine
 def main_inputs():
     RESET = 0
-    yield RESET
-    RESET = 1
     while True:
         yield RESET

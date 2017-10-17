@@ -33,8 +33,8 @@ module dff #(parameter init=1) (
 );
 reg outReg;
 always @(posedge clk) begin
-  if (!rst) outReg <= init;
-  else outReg <= in;
+  if (!rst) outReg <= in;
+  else outReg <= init;
 end
 assign out = outReg;
 

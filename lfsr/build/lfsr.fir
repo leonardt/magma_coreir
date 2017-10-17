@@ -30,15 +30,15 @@ circuit lfsr81False :
     output out : UInt<1>
     input in1 : UInt<1>
     out <= xor(in0,in1)
-  module coreir_concat_U0 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
-    out <= cat(in0,in1)
   module coreir_concat_U1 :
     input in0 : UInt<4>
     output out : UInt<8>
     input in1 : UInt<4>
+    out <= cat(in0,in1)
+  module coreir_concat_U0 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
     out <= cat(in0,in1)
   module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse :
     input CLK : Clock
