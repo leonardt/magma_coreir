@@ -1,33 +1,33 @@
 circuit PopCount8 : 
-  module corebit_concat :
-    input in0 : UInt<1>
-    output out : UInt<2>
-    input in1 : UInt<1>
-    out <= cat(in0,in1)
-  module corebit_const :
-    input value : UInt<1>
-    output out : UInt<1>
-    out <= value
-  module corebit_xor :
-    input in0 : UInt<1>
-    output out : UInt<1>
-    input in1 : UInt<1>
-    out <= xor(in0,in1)
-  module coreir_concat_U0 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
-    out <= cat(in0,in1)
-  module corebit_or :
-    input in0 : UInt<1>
-    output out : UInt<1>
-    input in1 : UInt<1>
-    out <= or(in0,in1)
   module corebit_and :
     input in0 : UInt<1>
     output out : UInt<1>
     input in1 : UInt<1>
     out <= and(in0,in1)
+  module corebit_const :
+    input value : UInt<1>
+    output out : UInt<1>
+    out <= value
+  module corebit_or :
+    input in0 : UInt<1>
+    output out : UInt<1>
+    input in1 : UInt<1>
+    out <= or(in0,in1)
+  module corebit_concat :
+    input in0 : UInt<1>
+    output out : UInt<2>
+    input in1 : UInt<1>
+    out <= cat(in0,in1)
+  module coreir_concat_U0 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
+    out <= cat(in0,in1)
+  module corebit_xor :
+    input in0 : UInt<1>
+    output out : UInt<1>
+    input in1 : UInt<1>
+    out <= xor(in0,in1)
   module and_wrapped :
     input I0 : UInt<1>
     input I1 : UInt<1>

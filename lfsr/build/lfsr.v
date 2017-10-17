@@ -9,15 +9,6 @@ module corebit_concat (
 
 endmodule //corebit_concat
 
-module corebit_xor (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 ^ in1;
-
-endmodule //corebit_xor
-
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -33,40 +24,14 @@ assign out = outReg;
 
 endmodule //dff
 
-module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O,
-  input  RESET
+module corebit_xor (
+  input in0,
+  input in1,
+  output out
 );
-  //Wire declarations for instance 'inst0' (Module dff)
-  wire  inst0_clk;
-  wire  inst0_rst;
-  wire  inst0_in;
-  wire  inst0_out;
-  dff #(.init(0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out),
-    .rst(inst0_rst)
-  );
+  assign out = in0 ^ in1;
 
-  //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in = I;
-  assign O = inst0_out;
-  assign inst0_rst = RESET;
-
-endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
-
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
+endmodule //corebit_xor
 
 module xor_wrapped (
   input  I0,
@@ -138,6 +103,15 @@ module fold_xor4None (
 
 endmodule //fold_xor4None
 
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
 module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
   input  CLK,
   input  I,
@@ -163,6 +137,32 @@ module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
   assign inst0_rst = RESET;
 
 endmodule //DFF_init1_has_ceFalse_has_resetTrue_has_setFalse
+
+module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O,
+  input  RESET
+);
+  //Wire declarations for instance 'inst0' (Module dff)
+  wire  inst0_clk;
+  wire  inst0_rst;
+  wire  inst0_in;
+  wire  inst0_out;
+  dff #(.init(0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out),
+    .rst(inst0_rst)
+  );
+
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in = I;
+  assign O = inst0_out;
+  assign inst0_rst = RESET;
+
+endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
 
 module SIPO8R_0001 (
   input  CLK,

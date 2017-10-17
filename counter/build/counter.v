@@ -9,6 +9,21 @@ module corebit_concat (
 
 endmodule //corebit_concat
 
+module dff #(parameter init=1) (
+  input clk,
+  input in,
+  input rst,
+  output out
+);
+reg outReg;
+always @(posedge clk) begin
+  if (!rst) outReg <= in;
+  else outReg <= init;
+end
+assign out = outReg;
+
+endmodule //dff
+
 module coreir_concat #(parameter width0=1, parameter width1=1) (
   input [width0-1:0] in0,
   input [width1-1:0] in1,
@@ -25,20 +40,31 @@ module corebit_const #(parameter value=1) (
 
 endmodule //corebit_const
 
-module dff #(parameter init=1) (
-  input clk,
-  input in,
-  input rst,
-  output out
+module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O,
+  input  RESET
 );
-reg outReg;
-always @(posedge clk) begin
-  if (!rst) outReg <= in;
-  else outReg <= init;
-end
-assign out = outReg;
+  //Wire declarations for instance 'inst0' (Module dff)
+  wire  inst0_clk;
+  wire  inst0_rst;
+  wire  inst0_in;
+  wire  inst0_out;
+  dff #(.init(0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out),
+    .rst(inst0_rst)
+  );
 
-endmodule //dff
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in = I;
+  assign O = inst0_out;
+  assign inst0_rst = RESET;
+
+endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
 
 module coreir_add #(parameter width=1) (
   input [width-1:0] in0,
@@ -70,32 +96,6 @@ module Add4 (
   assign O[3:0] = inst0_out[3:0];
 
 endmodule //Add4
-
-module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
-  input  CLK,
-  input  I,
-  output  O,
-  input  RESET
-);
-  //Wire declarations for instance 'inst0' (Module dff)
-  wire  inst0_clk;
-  wire  inst0_rst;
-  wire  inst0_in;
-  wire  inst0_out;
-  dff #(.init(0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out),
-    .rst(inst0_rst)
-  );
-
-  //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in = I;
-  assign O = inst0_out;
-  assign inst0_rst = RESET;
-
-endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
 
 module Register4R (
   input  CLK,

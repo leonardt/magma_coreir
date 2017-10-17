@@ -10,13 +10,8 @@ def counter_sim_factory(N):
     @coroutine
     def counter_sim():
         while True:
-            O = 0
-            for i in range(1, 1 << N):
-                inputs = yield O
-                if inputs["RESET"] == 1:
-                    break
+            for i in range(0, 1 << N):
                 O = i
-            else:
                 yield O
     return counter_sim
 

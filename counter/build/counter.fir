@@ -18,24 +18,6 @@ circuit Counter4R :
       (reset =>(rst, init))
     myreg <= in
     out <= myreg
-  module coreir_add_U0 :
-    input in0 : UInt<4>
-    output out : UInt<4>
-    input in1 : UInt<4>
-    out <= tail(add(in0,in1),1)
-  module coreir_concat_U1 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
-    out <= cat(in0,in1)
-  module Add4 :
-    input I0 : UInt<4>
-    input I1 : UInt<4>
-    output O : UInt<4>
-    inst inst0 of coreir_add_U0
-    inst0.in0 <= I0
-    inst0.in1 <= I1
-    O <= inst0.out
   module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse :
     input CLK : Clock
     input I : UInt<1>
@@ -47,6 +29,11 @@ circuit Counter4R :
     inst0.in <= I
     O <= inst0.out
     inst0.rst <= RESET
+  module coreir_concat_U1 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
+    out <= cat(in0,in1)
   module Register4R :
     input CLK : Clock
     input I : UInt<4>
@@ -67,13 +54,38 @@ circuit Counter4R :
     __magma_backend_concat2.in1 <= __magma_backend_concat1.out
     O <= __magma_backend_concat2.out
     inst0.CLK <= CLK
+    wire tmpidx_U2 : UInt
+    tmpidx_U2 <= bits(I,0,0)
+    inst0.I <= tmpidx_U2
     inst0.RESET <= RESET
     inst1.CLK <= CLK
+    wire tmpidx_U3 : UInt
+    tmpidx_U3 <= bits(I,1,1)
+    inst1.I <= tmpidx_U3
     inst1.RESET <= RESET
     inst2.CLK <= CLK
+    wire tmpidx_U4 : UInt
+    tmpidx_U4 <= bits(I,2,2)
+    inst2.I <= tmpidx_U4
     inst2.RESET <= RESET
     inst3.CLK <= CLK
+    wire tmpidx_U5 : UInt
+    tmpidx_U5 <= bits(I,3,3)
+    inst3.I <= tmpidx_U5
     inst3.RESET <= RESET
+  module coreir_add_U0 :
+    input in0 : UInt<4>
+    output out : UInt<4>
+    input in1 : UInt<4>
+    out <= tail(add(in0,in1),1)
+  module Add4 :
+    input I0 : UInt<4>
+    input I1 : UInt<4>
+    output O : UInt<4>
+    inst inst0 of coreir_add_U0
+    inst0.in0 <= I0
+    inst0.in1 <= I1
+    O <= inst0.out
   module Counter4R :
     input CLK : Clock
     output O : UInt<4>

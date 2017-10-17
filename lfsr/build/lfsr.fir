@@ -4,6 +4,16 @@ circuit lfsr81False :
     output out : UInt<2>
     input in1 : UInt<1>
     out <= cat(in0,in1)
+  module corebit_xor :
+    input in0 : UInt<1>
+    output out : UInt<1>
+    input in1 : UInt<1>
+    out <= xor(in0,in1)
+  module coreir_concat_U1 :
+    input in0 : UInt<4>
+    output out : UInt<8>
+    input in1 : UInt<4>
+    out <= cat(in0,in1)
   module corebit_dff :
     input init : UInt<1>
     input clk : Clock
@@ -14,6 +24,11 @@ circuit lfsr81False :
       (reset =>(rst, init))
     myreg <= in
     out <= myreg
+  module coreir_concat_U0 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
+    out <= cat(in0,in1)
   module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse :
     input CLK : Clock
     input I : UInt<1>
@@ -25,21 +40,6 @@ circuit lfsr81False :
     inst0.in <= I
     O <= inst0.out
     inst0.rst <= RESET
-  module corebit_xor :
-    input in0 : UInt<1>
-    output out : UInt<1>
-    input in1 : UInt<1>
-    out <= xor(in0,in1)
-  module coreir_concat_U1 :
-    input in0 : UInt<4>
-    output out : UInt<8>
-    input in1 : UInt<4>
-    out <= cat(in0,in1)
-  module coreir_concat_U0 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
-    out <= cat(in0,in1)
   module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse :
     input CLK : Clock
     input I : UInt<1>

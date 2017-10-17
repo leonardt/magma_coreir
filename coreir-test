@@ -10,7 +10,7 @@ parser.add_argument('-i', '--input', help=".json file from core:r", required=Tru
 parser.add_argument('-t', '--test_vectors', help=".vec file with test vectors", required=True)
 args = parser.parse_args()
 
-subprocess.call(['coreir', '-i', args.input, '-o', args.input.replace('.json', '.v')])
+# subprocess.call(['coreir', '-i', args.input, '-o', args.input.replace('.json', '.v')])
 
 import coreir
 from magma.testing.verilator import run_verilator_test
