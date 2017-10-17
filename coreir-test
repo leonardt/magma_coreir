@@ -72,5 +72,6 @@ int main(int argc, char **argv, char **env) {{
 run_verilator_test(
     args.input.replace(".json", "").replace("build/", ""),
     harness_file.replace("build/", "").replace(".cpp", ""),
-    module.name
+    module.name,
+    "-Wno-UNUSED"
 )
