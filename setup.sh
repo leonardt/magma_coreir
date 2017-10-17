@@ -17,6 +17,6 @@ sbt assembly
 sbt publish-local
 cd ..
 
-cd firrtl-interpreter
-sbt
-cd ..
+# cd firrtl-interpreter
+# sbt
+# cd ..
