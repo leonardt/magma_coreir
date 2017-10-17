@@ -47,6 +47,9 @@ poke,RESET,1
 expect,O,14
 step, 1
 poke,RESET,1
+expect,O,15
+step, 1
+poke,RESET,1
 expect,O,0
 step, 1
 poke,RESET,1
@@ -90,7 +93,4 @@ expect,O,13
 step, 1
 poke,RESET,1
 expect,O,14
-step, 1
-poke,RESET,1
-expect,O,0
 step, 1

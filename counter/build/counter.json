@@ -53,11 +53,11 @@
           }
         },
         "connections":[
-          ["__magma_backend_concat0.in0","bit_const_VCC.out"],
+          ["__magma_backend_concat0.in0","bit_const_GND.out"],
           ["__magma_backend_concat0.in1","bit_const_GND.out"],
           ["__magma_backend_concat0.out","__magma_backend_concat2.in0"],
           ["__magma_backend_concat1.in0","bit_const_GND.out"],
-          ["__magma_backend_concat1.in1","bit_const_GND.out"],
+          ["__magma_backend_concat1.in1","bit_const_VCC.out"],
           ["__magma_backend_concat1.out","__magma_backend_concat2.in1"],
           ["__magma_backend_concat2.out","inst0.I1"],
           ["inst0.I0","inst1.O"],
@@ -119,11 +119,11 @@
           }
         },
         "connections":[
-          ["__magma_backend_concat0.in0","inst0.O"],
-          ["__magma_backend_concat0.in1","inst1.O"],
+          ["__magma_backend_concat0.in0","inst3.O"],
+          ["__magma_backend_concat0.in1","inst2.O"],
           ["__magma_backend_concat0.out","__magma_backend_concat2.in0"],
-          ["__magma_backend_concat1.in0","inst2.O"],
-          ["__magma_backend_concat1.in1","inst3.O"],
+          ["__magma_backend_concat1.in0","inst1.O"],
+          ["__magma_backend_concat1.in1","inst0.O"],
           ["__magma_backend_concat1.out","__magma_backend_concat2.in1"],
           ["__magma_backend_concat2.out","self.O"],
           ["inst0.CLK","self.CLK"],

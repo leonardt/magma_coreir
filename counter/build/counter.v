@@ -1,21 +1,5 @@
 
 
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
-module corebit_const #(parameter value=1) (
-  output out
-);
-  assign out = value;
-
-endmodule //corebit_const
-
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -30,6 +14,62 @@ end
 assign out = outReg;
 
 endmodule //dff
+
+module corebit_const #(parameter value=1) (
+  output out
+);
+  assign out = value;
+
+endmodule //corebit_const
+
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
+module coreir_add #(parameter width=1) (
+  input [width-1:0] in0,
+  input [width-1:0] in1,
+  output [width-1:0] out
+);
+  assign out = in0 + in1;
+
+endmodule //coreir_add
+
+module corebit_concat (
+  input in0,
+  input in1,
+  output [1:0] out
+);
+  assign out = {in0, in1};
+
+endmodule //corebit_concat
+
+module Add4 (
+  input [3:0] I0,
+  input [3:0] I1,
+  output [3:0] O
+);
+  //Wire declarations for instance 'inst0' (Module coreir_add)
+  wire [3:0] inst0_in0;
+  wire [3:0] inst0_out;
+  wire [3:0] inst0_in1;
+  coreir_add #(.width(4)) inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0[3:0] = I0[3:0];
+  assign inst0_in1[3:0] = I1[3:0];
+  assign O[3:0] = inst0_out[3:0];
+
+endmodule //Add4
 
 module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   input  CLK,
@@ -56,24 +96,6 @@ module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
   assign inst0_rst = RESET;
 
 endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
-
-module corebit_concat (
-  input in0,
-  input in1,
-  output [1:0] out
-);
-  assign out = {in0, in1};
-
-endmodule //corebit_concat
-
-module coreir_add #(parameter width=1) (
-  input [width-1:0] in0,
-  input [width-1:0] in1,
-  output [width-1:0] out
-);
-  assign out = in0 + in1;
-
-endmodule //coreir_add
 
 module Register4R (
   input  CLK,
@@ -160,11 +182,11 @@ module Register4R (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = inst0_O;
-  assign __magma_backend_concat0_in1 = inst1_O;
+  assign __magma_backend_concat0_in0 = inst3_O;
+  assign __magma_backend_concat0_in1 = inst2_O;
   assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
-  assign __magma_backend_concat1_in0 = inst2_O;
-  assign __magma_backend_concat1_in1 = inst3_O;
+  assign __magma_backend_concat1_in0 = inst1_O;
+  assign __magma_backend_concat1_in1 = inst0_O;
   assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
   assign O[3:0] = __magma_backend_concat2_out[3:0];
   assign inst0_CLK = CLK;
@@ -181,28 +203,6 @@ module Register4R (
   assign inst3_RESET = RESET;
 
 endmodule //Register4R
-
-module Add4 (
-  input [3:0] I0,
-  input [3:0] I1,
-  output [3:0] O
-);
-  //Wire declarations for instance 'inst0' (Module coreir_add)
-  wire [3:0] inst0_in0;
-  wire [3:0] inst0_out;
-  wire [3:0] inst0_in1;
-  coreir_add #(.width(4)) inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0[3:0] = I0[3:0];
-  assign inst0_in1[3:0] = I1[3:0];
-  assign O[3:0] = inst0_out[3:0];
-
-endmodule //Add4
 
 module Counter4R (
   input  CLK,
@@ -274,11 +274,11 @@ module Counter4R (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = bit_const_VCC_out;
+  assign __magma_backend_concat0_in0 = bit_const_GND_out;
   assign __magma_backend_concat0_in1 = bit_const_GND_out;
   assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
   assign __magma_backend_concat1_in0 = bit_const_GND_out;
-  assign __magma_backend_concat1_in1 = bit_const_GND_out;
+  assign __magma_backend_concat1_in1 = bit_const_VCC_out;
   assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
   assign inst0_I1[3:0] = __magma_backend_concat2_out[3:0];
   assign inst0_I0[3:0] = inst1_O[3:0];

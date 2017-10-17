@@ -11,13 +11,13 @@ def counter_sim_factory(N):
     def counter_sim():
         while True:
             O = 0
-            COUT = 0
             for i in range(1, 1 << N):
-                inputs = yield O, COUT
+                inputs = yield O
                 if not inputs["RESET"]:
                     break
                 O = i
-                COUT = int(i == (1 << N) - 1)  # Counter sets COUT when the next value is 0
+            else:
+                yield O
     return counter_sim
 
 main_sim = counter_sim_factory(4)
