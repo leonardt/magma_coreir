@@ -1,5 +1,23 @@
 
 
+module corebit_concat (
+  input in0,
+  input in1,
+  output [1:0] out
+);
+  assign out = {in0, in1};
+
+endmodule //corebit_concat
+
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
 module dff #(parameter init=1) (
   input clk,
   input in,
@@ -15,15 +33,6 @@ assign out = outReg;
 
 endmodule //dff
 
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
 module corebit_xor (
   input in0,
   input in1,
@@ -32,15 +41,6 @@ module corebit_xor (
   assign out = in0 ^ in1;
 
 endmodule //corebit_xor
-
-module corebit_concat (
-  input in0,
-  input in1,
-  output [1:0] out
-);
-  assign out = {in0, in1};
-
-endmodule //corebit_concat
 
 module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
   input  CLK,
@@ -53,7 +53,7 @@ module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
   wire  inst0_rst;
   wire  inst0_in;
   wire  inst0_out;
-  dff #(.init(0)) inst0(
+  dff #(.init(1)) inst0(
     .clk(inst0_clk),
     .in(inst0_in),
     .out(inst0_out),
@@ -267,17 +267,17 @@ module SIPO8R_0001 (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = inst0_O;
-  assign __magma_backend_concat0_in1 = inst1_O;
+  assign __magma_backend_concat0_in0 = inst7_O;
+  assign __magma_backend_concat0_in1 = inst6_O;
   assign __magma_backend_concat4_in0[1:0] = __magma_backend_concat0_out[1:0];
-  assign __magma_backend_concat1_in0 = inst2_O;
-  assign __magma_backend_concat1_in1 = inst3_O;
+  assign __magma_backend_concat1_in0 = inst5_O;
+  assign __magma_backend_concat1_in1 = inst4_O;
   assign __magma_backend_concat4_in1[1:0] = __magma_backend_concat1_out[1:0];
-  assign __magma_backend_concat2_in0 = inst4_O;
-  assign __magma_backend_concat2_in1 = inst5_O;
+  assign __magma_backend_concat2_in0 = inst3_O;
+  assign __magma_backend_concat2_in1 = inst2_O;
   assign __magma_backend_concat5_in0[1:0] = __magma_backend_concat2_out[1:0];
-  assign __magma_backend_concat3_in0 = inst6_O;
-  assign __magma_backend_concat3_in1 = inst7_O;
+  assign __magma_backend_concat3_in0 = inst1_O;
+  assign __magma_backend_concat3_in1 = inst0_O;
   assign __magma_backend_concat5_in1[1:0] = __magma_backend_concat3_out[1:0];
   assign __magma_backend_concat6_in0[3:0] = __magma_backend_concat4_out[3:0];
   assign __magma_backend_concat6_in1[3:0] = __magma_backend_concat5_out[3:0];

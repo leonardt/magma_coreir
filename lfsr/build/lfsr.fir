@@ -1,13 +1,8 @@
 circuit lfsr81False : 
-  module corebit_xor :
+  module corebit_concat :
     input in0 : UInt<1>
-    output out : UInt<1>
+    output out : UInt<2>
     input in1 : UInt<1>
-    out <= xor(in0,in1)
-  module coreir_concat_U0 :
-    input in0 : UInt<2>
-    output out : UInt<4>
-    input in1 : UInt<2>
     out <= cat(in0,in1)
   module corebit_dff :
     input init : UInt<1>
@@ -30,19 +25,16 @@ circuit lfsr81False :
     inst0.in <= I
     O <= inst0.out
     inst0.rst <= RESET
-  module corebit_concat :
+  module corebit_xor :
     input in0 : UInt<1>
-    output out : UInt<2>
+    output out : UInt<1>
     input in1 : UInt<1>
+    out <= xor(in0,in1)
+  module coreir_concat_U0 :
+    input in0 : UInt<2>
+    output out : UInt<4>
+    input in1 : UInt<2>
     out <= cat(in0,in1)
-  module xor_wrapped :
-    input I0 : UInt<1>
-    input I1 : UInt<1>
-    output O : UInt<1>
-    inst inst0 of corebit_xor
-    inst0.in0 <= I0
-    inst0.in1 <= I1
-    O <= inst0.out
   module coreir_concat_U1 :
     input in0 : UInt<4>
     output out : UInt<8>
@@ -54,7 +46,7 @@ circuit lfsr81False :
     input RESET : UInt<1>
     output O : UInt<1>
     inst inst0 of corebit_dff
-    inst0.init <= UInt(0)
+    inst0.init <= UInt(1)
     inst0.clk <= CLK
     inst0.in <= I
     O <= inst0.out
@@ -79,17 +71,17 @@ circuit lfsr81False :
     inst inst5 of DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
     inst inst6 of DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
     inst inst7 of DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
-    __magma_backend_concat0.in0 <= inst0.O
-    __magma_backend_concat0.in1 <= inst1.O
+    __magma_backend_concat0.in0 <= inst7.O
+    __magma_backend_concat0.in1 <= inst6.O
     __magma_backend_concat4.in0 <= __magma_backend_concat0.out
-    __magma_backend_concat1.in0 <= inst2.O
-    __magma_backend_concat1.in1 <= inst3.O
+    __magma_backend_concat1.in0 <= inst5.O
+    __magma_backend_concat1.in1 <= inst4.O
     __magma_backend_concat4.in1 <= __magma_backend_concat1.out
-    __magma_backend_concat2.in0 <= inst4.O
-    __magma_backend_concat2.in1 <= inst5.O
+    __magma_backend_concat2.in0 <= inst3.O
+    __magma_backend_concat2.in1 <= inst2.O
     __magma_backend_concat5.in0 <= __magma_backend_concat2.out
-    __magma_backend_concat3.in0 <= inst6.O
-    __magma_backend_concat3.in1 <= inst7.O
+    __magma_backend_concat3.in0 <= inst1.O
+    __magma_backend_concat3.in1 <= inst0.O
     __magma_backend_concat5.in1 <= __magma_backend_concat3.out
     __magma_backend_concat6.in0 <= __magma_backend_concat4.out
     __magma_backend_concat6.in1 <= __magma_backend_concat5.out
@@ -118,6 +110,14 @@ circuit lfsr81False :
     inst6.RESET <= RESET
     inst7.CLK <= CLK
     inst7.RESET <= RESET
+  module xor_wrapped :
+    input I0 : UInt<1>
+    input I1 : UInt<1>
+    output O : UInt<1>
+    inst inst0 of corebit_xor
+    inst0.in0 <= I0
+    inst0.in1 <= I1
+    O <= inst0.out
   module fold_xor4None :
     input I0 : UInt<1>
     input I1 : UInt<1>
