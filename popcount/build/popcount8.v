@@ -1,13 +1,20 @@
 
 
-module corebit_xor (
+module corebit_concat (
   input in0,
   input in1,
+  output [1:0] out
+);
+  assign out = {in0, in1};
+
+endmodule //corebit_concat
+
+module corebit_const #(parameter value=1) (
   output out
 );
-  assign out = in0 ^ in1;
+  assign out = value;
 
-endmodule //corebit_xor
+endmodule //corebit_const
 
 module corebit_or (
   input in0,
@@ -18,23 +25,29 @@ module corebit_or (
 
 endmodule //corebit_or
 
-module corebit_const #(parameter value=1) (
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
+
+module corebit_xor (
+  input in0,
+  input in1,
   output out
 );
-  assign out = value;
+  assign out = in0 ^ in1;
 
-endmodule //corebit_const
+endmodule //corebit_xor
 
-module PopCount8_flattened (
-  input [7:0] I,
-  output [3:0] O
+module xor_wrapped (
+  input  I0,
+  input  I1,
+  output  O
 );
-  //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
-  wire  bit_const_GND_out;
-  corebit_const #(.value(0)) bit_const_GND(
-    .out(bit_const_GND_out)
-  );
-
   //Wire declarations for instance 'inst0' (Module corebit_xor)
   wire  inst0_in0;
   wire  inst0_out;
@@ -45,591 +58,47 @@ module PopCount8_flattened (
     .out(inst0_out)
   );
 
-  //Wire declarations for instance 'inst1' (Module corebit_xor)
-  wire  inst1_in0;
-  wire  inst1_out;
-  wire  inst1_in1;
-  corebit_xor inst1(
-    .in0(inst1_in0),
-    .in1(inst1_in1),
-    .out(inst1_out)
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //xor_wrapped
+
+module fold_xor3None (
+  input  I0,
+  input  I1,
+  input  I2,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module xor_wrapped)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_O;
+  xor_wrapped inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .O(inst0_O)
   );
 
-  //Wire declarations for instance 'inst10' (Module corebit_and)
-  wire  inst10_in0;
-  wire  inst10_out;
-  wire  inst10_in1;
-  corebit_and inst10(
-    .in0(inst10_in0),
-    .in1(inst10_in1),
-    .out(inst10_out)
-  );
-
-  //Wire declarations for instance 'inst11' (Module corebit_and)
-  wire  inst11_in0;
-  wire  inst11_out;
-  wire  inst11_in1;
-  corebit_and inst11(
-    .in0(inst11_in0),
-    .in1(inst11_in1),
-    .out(inst11_out)
-  );
-
-  //Wire declarations for instance 'inst12' (Module corebit_or)
-  wire  inst12_in0;
-  wire  inst12_out;
-  wire  inst12_in1;
-  corebit_or inst12(
-    .in0(inst12_in0),
-    .in1(inst12_in1),
-    .out(inst12_out)
-  );
-
-  //Wire declarations for instance 'inst13' (Module corebit_or)
-  wire  inst13_in0;
-  wire  inst13_out;
-  wire  inst13_in1;
-  corebit_or inst13(
-    .in0(inst13_in0),
-    .in1(inst13_in1),
-    .out(inst13_out)
-  );
-
-  //Wire declarations for instance 'inst14' (Module corebit_xor)
-  wire  inst14_in0;
-  wire  inst14_out;
-  wire  inst14_in1;
-  corebit_xor inst14(
-    .in0(inst14_in0),
-    .in1(inst14_in1),
-    .out(inst14_out)
-  );
-
-  //Wire declarations for instance 'inst15' (Module corebit_xor)
-  wire  inst15_in0;
-  wire  inst15_out;
-  wire  inst15_in1;
-  corebit_xor inst15(
-    .in0(inst15_in0),
-    .in1(inst15_in1),
-    .out(inst15_out)
-  );
-
-  //Wire declarations for instance 'inst16' (Module corebit_and)
-  wire  inst16_in0;
-  wire  inst16_out;
-  wire  inst16_in1;
-  corebit_and inst16(
-    .in0(inst16_in0),
-    .in1(inst16_in1),
-    .out(inst16_out)
-  );
-
-  //Wire declarations for instance 'inst17' (Module corebit_and)
-  wire  inst17_in0;
-  wire  inst17_out;
-  wire  inst17_in1;
-  corebit_and inst17(
-    .in0(inst17_in0),
-    .in1(inst17_in1),
-    .out(inst17_out)
-  );
-
-  //Wire declarations for instance 'inst18' (Module corebit_and)
-  wire  inst18_in0;
-  wire  inst18_out;
-  wire  inst18_in1;
-  corebit_and inst18(
-    .in0(inst18_in0),
-    .in1(inst18_in1),
-    .out(inst18_out)
-  );
-
-  //Wire declarations for instance 'inst19' (Module corebit_or)
-  wire  inst19_in0;
-  wire  inst19_out;
-  wire  inst19_in1;
-  corebit_or inst19(
-    .in0(inst19_in0),
-    .in1(inst19_in1),
-    .out(inst19_out)
-  );
-
-  //Wire declarations for instance 'inst2' (Module corebit_and)
-  wire  inst2_in0;
-  wire  inst2_out;
-  wire  inst2_in1;
-  corebit_and inst2(
-    .in0(inst2_in0),
-    .in1(inst2_in1),
-    .out(inst2_out)
-  );
-
-  //Wire declarations for instance 'inst20' (Module corebit_or)
-  wire  inst20_in0;
-  wire  inst20_out;
-  wire  inst20_in1;
-  corebit_or inst20(
-    .in0(inst20_in0),
-    .in1(inst20_in1),
-    .out(inst20_out)
-  );
-
-  //Wire declarations for instance 'inst21' (Module corebit_xor)
-  wire  inst21_in0;
-  wire  inst21_out;
-  wire  inst21_in1;
-  corebit_xor inst21(
-    .in0(inst21_in0),
-    .in1(inst21_in1),
-    .out(inst21_out)
-  );
-
-  //Wire declarations for instance 'inst22' (Module corebit_xor)
-  wire  inst22_in0;
-  wire  inst22_out;
-  wire  inst22_in1;
-  corebit_xor inst22(
-    .in0(inst22_in0),
-    .in1(inst22_in1),
-    .out(inst22_out)
-  );
-
-  //Wire declarations for instance 'inst23' (Module corebit_and)
-  wire  inst23_in0;
-  wire  inst23_out;
-  wire  inst23_in1;
-  corebit_and inst23(
-    .in0(inst23_in0),
-    .in1(inst23_in1),
-    .out(inst23_out)
-  );
-
-  //Wire declarations for instance 'inst24' (Module corebit_and)
-  wire  inst24_in0;
-  wire  inst24_out;
-  wire  inst24_in1;
-  corebit_and inst24(
-    .in0(inst24_in0),
-    .in1(inst24_in1),
-    .out(inst24_out)
-  );
-
-  //Wire declarations for instance 'inst25' (Module corebit_and)
-  wire  inst25_in0;
-  wire  inst25_out;
-  wire  inst25_in1;
-  corebit_and inst25(
-    .in0(inst25_in0),
-    .in1(inst25_in1),
-    .out(inst25_out)
-  );
-
-  //Wire declarations for instance 'inst26' (Module corebit_or)
-  wire  inst26_in0;
-  wire  inst26_out;
-  wire  inst26_in1;
-  corebit_or inst26(
-    .in0(inst26_in0),
-    .in1(inst26_in1),
-    .out(inst26_out)
-  );
-
-  //Wire declarations for instance 'inst27' (Module corebit_or)
-  wire  inst27_in0;
-  wire  inst27_out;
-  wire  inst27_in1;
-  corebit_or inst27(
-    .in0(inst27_in0),
-    .in1(inst27_in1),
-    .out(inst27_out)
-  );
-
-  //Wire declarations for instance 'inst28' (Module corebit_xor)
-  wire  inst28_in0;
-  wire  inst28_out;
-  wire  inst28_in1;
-  corebit_xor inst28(
-    .in0(inst28_in0),
-    .in1(inst28_in1),
-    .out(inst28_out)
-  );
-
-  //Wire declarations for instance 'inst29' (Module corebit_xor)
-  wire  inst29_in0;
-  wire  inst29_out;
-  wire  inst29_in1;
-  corebit_xor inst29(
-    .in0(inst29_in0),
-    .in1(inst29_in1),
-    .out(inst29_out)
-  );
-
-  //Wire declarations for instance 'inst3' (Module corebit_and)
-  wire  inst3_in0;
-  wire  inst3_out;
-  wire  inst3_in1;
-  corebit_and inst3(
-    .in0(inst3_in0),
-    .in1(inst3_in1),
-    .out(inst3_out)
-  );
-
-  //Wire declarations for instance 'inst30' (Module corebit_and)
-  wire  inst30_in0;
-  wire  inst30_out;
-  wire  inst30_in1;
-  corebit_and inst30(
-    .in0(inst30_in0),
-    .in1(inst30_in1),
-    .out(inst30_out)
-  );
-
-  //Wire declarations for instance 'inst31' (Module corebit_and)
-  wire  inst31_in0;
-  wire  inst31_out;
-  wire  inst31_in1;
-  corebit_and inst31(
-    .in0(inst31_in0),
-    .in1(inst31_in1),
-    .out(inst31_out)
-  );
-
-  //Wire declarations for instance 'inst32' (Module corebit_and)
-  wire  inst32_in0;
-  wire  inst32_out;
-  wire  inst32_in1;
-  corebit_and inst32(
-    .in0(inst32_in0),
-    .in1(inst32_in1),
-    .out(inst32_out)
-  );
-
-  //Wire declarations for instance 'inst33' (Module corebit_or)
-  wire  inst33_in0;
-  wire  inst33_out;
-  wire  inst33_in1;
-  corebit_or inst33(
-    .in0(inst33_in0),
-    .in1(inst33_in1),
-    .out(inst33_out)
-  );
-
-  //Wire declarations for instance 'inst34' (Module corebit_or)
-  wire  inst34_in0;
-  wire  inst34_out;
-  wire  inst34_in1;
-  corebit_or inst34(
-    .in0(inst34_in0),
-    .in1(inst34_in1),
-    .out(inst34_out)
-  );
-
-  //Wire declarations for instance 'inst35' (Module corebit_xor)
-  wire  inst35_in0;
-  wire  inst35_out;
-  wire  inst35_in1;
-  corebit_xor inst35(
-    .in0(inst35_in0),
-    .in1(inst35_in1),
-    .out(inst35_out)
-  );
-
-  //Wire declarations for instance 'inst36' (Module corebit_xor)
-  wire  inst36_in0;
-  wire  inst36_out;
-  wire  inst36_in1;
-  corebit_xor inst36(
-    .in0(inst36_in0),
-    .in1(inst36_in1),
-    .out(inst36_out)
-  );
-
-  //Wire declarations for instance 'inst37' (Module corebit_and)
-  wire  inst37_in0;
-  wire  inst37_out;
-  wire  inst37_in1;
-  corebit_and inst37(
-    .in0(inst37_in0),
-    .in1(inst37_in1),
-    .out(inst37_out)
-  );
-
-  //Wire declarations for instance 'inst38' (Module corebit_and)
-  wire  inst38_in0;
-  wire  inst38_out;
-  wire  inst38_in1;
-  corebit_and inst38(
-    .in0(inst38_in0),
-    .in1(inst38_in1),
-    .out(inst38_out)
-  );
-
-  //Wire declarations for instance 'inst39' (Module corebit_and)
-  wire  inst39_in0;
-  wire  inst39_out;
-  wire  inst39_in1;
-  corebit_and inst39(
-    .in0(inst39_in0),
-    .in1(inst39_in1),
-    .out(inst39_out)
-  );
-
-  //Wire declarations for instance 'inst4' (Module corebit_and)
-  wire  inst4_in0;
-  wire  inst4_out;
-  wire  inst4_in1;
-  corebit_and inst4(
-    .in0(inst4_in0),
-    .in1(inst4_in1),
-    .out(inst4_out)
-  );
-
-  //Wire declarations for instance 'inst40' (Module corebit_or)
-  wire  inst40_in0;
-  wire  inst40_out;
-  wire  inst40_in1;
-  corebit_or inst40(
-    .in0(inst40_in0),
-    .in1(inst40_in1),
-    .out(inst40_out)
-  );
-
-  //Wire declarations for instance 'inst41' (Module corebit_or)
-  wire  inst41_in0;
-  wire  inst41_out;
-  wire  inst41_in1;
-  corebit_or inst41(
-    .in0(inst41_in0),
-    .in1(inst41_in1),
-    .out(inst41_out)
-  );
-
-  //Wire declarations for instance 'inst42' (Module corebit_xor)
-  wire  inst42_in0;
-  wire  inst42_out;
-  wire  inst42_in1;
-  corebit_xor inst42(
-    .in0(inst42_in0),
-    .in1(inst42_in1),
-    .out(inst42_out)
-  );
-
-  //Wire declarations for instance 'inst43' (Module corebit_xor)
-  wire  inst43_in0;
-  wire  inst43_out;
-  wire  inst43_in1;
-  corebit_xor inst43(
-    .in0(inst43_in0),
-    .in1(inst43_in1),
-    .out(inst43_out)
-  );
-
-  //Wire declarations for instance 'inst44' (Module corebit_and)
-  wire  inst44_in0;
-  wire  inst44_out;
-  wire  inst44_in1;
-  corebit_and inst44(
-    .in0(inst44_in0),
-    .in1(inst44_in1),
-    .out(inst44_out)
-  );
-
-  //Wire declarations for instance 'inst45' (Module corebit_and)
-  wire  inst45_in0;
-  wire  inst45_out;
-  wire  inst45_in1;
-  corebit_and inst45(
-    .in0(inst45_in0),
-    .in1(inst45_in1),
-    .out(inst45_out)
-  );
-
-  //Wire declarations for instance 'inst46' (Module corebit_and)
-  wire  inst46_in0;
-  wire  inst46_out;
-  wire  inst46_in1;
-  corebit_and inst46(
-    .in0(inst46_in0),
-    .in1(inst46_in1),
-    .out(inst46_out)
-  );
-
-  //Wire declarations for instance 'inst47' (Module corebit_or)
-  wire  inst47_in0;
-  wire  inst47_out;
-  wire  inst47_in1;
-  corebit_or inst47(
-    .in0(inst47_in0),
-    .in1(inst47_in1),
-    .out(inst47_out)
-  );
-
-  //Wire declarations for instance 'inst48' (Module corebit_or)
-  wire  inst48_in0;
-  wire  inst48_out;
-  wire  inst48_in1;
-  corebit_or inst48(
-    .in0(inst48_in0),
-    .in1(inst48_in1),
-    .out(inst48_out)
-  );
-
-  //Wire declarations for instance 'inst5' (Module corebit_or)
-  wire  inst5_in0;
-  wire  inst5_out;
-  wire  inst5_in1;
-  corebit_or inst5(
-    .in0(inst5_in0),
-    .in1(inst5_in1),
-    .out(inst5_out)
-  );
-
-  //Wire declarations for instance 'inst6' (Module corebit_or)
-  wire  inst6_in0;
-  wire  inst6_out;
-  wire  inst6_in1;
-  corebit_or inst6(
-    .in0(inst6_in0),
-    .in1(inst6_in1),
-    .out(inst6_out)
-  );
-
-  //Wire declarations for instance 'inst7' (Module corebit_xor)
-  wire  inst7_in0;
-  wire  inst7_out;
-  wire  inst7_in1;
-  corebit_xor inst7(
-    .in0(inst7_in0),
-    .in1(inst7_in1),
-    .out(inst7_out)
-  );
-
-  //Wire declarations for instance 'inst8' (Module corebit_xor)
-  wire  inst8_in0;
-  wire  inst8_out;
-  wire  inst8_in1;
-  corebit_xor inst8(
-    .in0(inst8_in0),
-    .in1(inst8_in1),
-    .out(inst8_out)
-  );
-
-  //Wire declarations for instance 'inst9' (Module corebit_and)
-  wire  inst9_in0;
-  wire  inst9_out;
-  wire  inst9_in1;
-  corebit_and inst9(
-    .in0(inst9_in0),
-    .in1(inst9_in1),
-    .out(inst9_out)
+  //Wire declarations for instance 'inst1' (Module xor_wrapped)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_O;
+  xor_wrapped inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .O(inst1_O)
   );
 
   //All the connections
-  assign inst29_in1 = bit_const_GND_out;
-  assign inst31_in1 = bit_const_GND_out;
-  assign inst32_in0 = bit_const_GND_out;
-  assign inst36_in1 = bit_const_GND_out;
-  assign inst38_in1 = bit_const_GND_out;
-  assign inst39_in0 = bit_const_GND_out;
-  assign inst43_in1 = bit_const_GND_out;
-  assign inst45_in1 = bit_const_GND_out;
-  assign inst46_in0 = bit_const_GND_out;
-  assign inst0_in0 = I[0];
-  assign inst0_in1 = I[1];
-  assign inst1_in0 = inst0_out;
-  assign inst1_in1 = I[2];
-  assign inst14_in0 = inst1_out;
-  assign inst16_in0 = inst1_out;
-  assign inst18_in1 = inst1_out;
-  assign inst10_in0 = I[4];
-  assign inst10_in1 = I[5];
-  assign inst12_in1 = inst10_out;
-  assign inst11_in0 = I[5];
-  assign inst11_in1 = I[3];
-  assign inst13_in1 = inst11_out;
-  assign inst12_in0 = inst9_out;
-  assign inst13_in0 = inst12_out;
-  assign inst21_in1 = inst13_out;
-  assign inst23_in1 = inst13_out;
-  assign inst24_in0 = inst13_out;
-  assign inst14_in1 = inst8_out;
-  assign inst15_in0 = inst14_out;
-  assign inst15_in1 = I[6];
-  assign inst28_in0 = inst15_out;
-  assign inst30_in0 = inst15_out;
-  assign inst32_in1 = inst15_out;
-  assign inst16_in1 = inst8_out;
-  assign inst19_in0 = inst16_out;
-  assign inst17_in0 = inst8_out;
-  assign inst17_in1 = I[6];
-  assign inst19_in1 = inst17_out;
-  assign inst18_in0 = I[6];
-  assign inst20_in1 = inst18_out;
-  assign inst20_in0 = inst19_out;
-  assign inst2_in0 = I[0];
-  assign inst2_in1 = I[1];
-  assign inst5_in0 = inst2_out;
-  assign inst22_in1 = inst20_out;
-  assign inst24_in1 = inst20_out;
-  assign inst25_in0 = inst20_out;
-  assign inst21_in0 = inst6_out;
-  assign inst22_in0 = inst21_out;
-  assign inst35_in0 = inst22_out;
-  assign inst37_in0 = inst22_out;
-  assign inst39_in1 = inst22_out;
-  assign inst23_in0 = inst6_out;
-  assign inst26_in0 = inst23_out;
-  assign inst26_in1 = inst24_out;
-  assign inst25_in1 = inst6_out;
-  assign inst27_in1 = inst25_out;
-  assign inst27_in0 = inst26_out;
-  assign inst42_in0 = inst27_out;
-  assign inst44_in0 = inst27_out;
-  assign inst46_in1 = inst27_out;
-  assign inst28_in1 = I[7];
-  assign inst29_in0 = inst28_out;
-  assign O[0] = inst29_out;
-  assign inst3_in0 = I[1];
-  assign inst3_in1 = I[2];
-  assign inst5_in1 = inst3_out;
-  assign inst30_in1 = I[7];
-  assign inst33_in0 = inst30_out;
-  assign inst31_in0 = I[7];
-  assign inst33_in1 = inst31_out;
-  assign inst34_in1 = inst32_out;
-  assign inst34_in0 = inst33_out;
-  assign inst35_in1 = inst34_out;
-  assign inst37_in1 = inst34_out;
-  assign inst38_in0 = inst34_out;
-  assign inst36_in0 = inst35_out;
-  assign O[1] = inst36_out;
-  assign inst40_in0 = inst37_out;
-  assign inst40_in1 = inst38_out;
-  assign inst41_in1 = inst39_out;
-  assign inst4_in0 = I[2];
-  assign inst4_in1 = I[0];
-  assign inst6_in1 = inst4_out;
-  assign inst41_in0 = inst40_out;
-  assign inst42_in1 = inst41_out;
-  assign inst44_in1 = inst41_out;
-  assign inst45_in0 = inst41_out;
-  assign inst43_in0 = inst42_out;
-  assign O[2] = inst43_out;
-  assign inst47_in0 = inst44_out;
-  assign inst47_in1 = inst45_out;
-  assign inst48_in1 = inst46_out;
-  assign inst48_in0 = inst47_out;
-  assign O[3] = inst48_out;
-  assign inst6_in0 = inst5_out;
-  assign inst7_in0 = I[3];
-  assign inst7_in1 = I[4];
-  assign inst8_in0 = inst7_out;
-  assign inst8_in1 = I[5];
-  assign inst9_in0 = I[3];
-  assign inst9_in1 = I[4];
+  assign inst0_I0 = I0;
+  assign inst0_I1 = I1;
+  assign inst1_I0 = inst0_O;
+  assign inst1_I1 = I2;
+  assign O = inst1_O;
 
-endmodule //PopCount8_flattened
+endmodule //fold_xor3None
 
 module corebit_and (
   input in0,
@@ -639,3 +108,405 @@ module corebit_and (
   assign out = in0 & in1;
 
 endmodule //corebit_and
+
+module and_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_and)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_and inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //and_wrapped
+
+module or_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_or)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_or inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //or_wrapped
+
+module fold_or3None (
+  input  I0,
+  input  I1,
+  input  I2,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module or_wrapped)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_O;
+  or_wrapped inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .O(inst0_O)
+  );
+
+  //Wire declarations for instance 'inst1' (Module or_wrapped)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_O;
+  or_wrapped inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .O(inst1_O)
+  );
+
+  //All the connections
+  assign inst0_I0 = I0;
+  assign inst0_I1 = I1;
+  assign inst1_I0 = inst0_O;
+  assign inst1_I1 = I2;
+  assign O = inst1_O;
+
+endmodule //fold_or3None
+
+module Op (
+  input  I0,
+  input  I1,
+  input  I2,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module and_wrapped)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_O;
+  and_wrapped inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .O(inst0_O)
+  );
+
+  //Wire declarations for instance 'inst1' (Module and_wrapped)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_O;
+  and_wrapped inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .O(inst1_O)
+  );
+
+  //Wire declarations for instance 'inst2' (Module and_wrapped)
+  wire  inst2_I0;
+  wire  inst2_I1;
+  wire  inst2_O;
+  and_wrapped inst2(
+    .I0(inst2_I0),
+    .I1(inst2_I1),
+    .O(inst2_O)
+  );
+
+  //Wire declarations for instance 'inst3' (Module fold_or3None)
+  wire  inst3_I0;
+  wire  inst3_I1;
+  wire  inst3_I2;
+  wire  inst3_O;
+  fold_or3None inst3(
+    .I0(inst3_I0),
+    .I1(inst3_I1),
+    .I2(inst3_I2),
+    .O(inst3_O)
+  );
+
+  //All the connections
+  assign inst0_I0 = I0;
+  assign inst0_I1 = I1;
+  assign inst3_I0 = inst0_O;
+  assign inst1_I0 = I1;
+  assign inst1_I1 = I2;
+  assign inst3_I1 = inst1_O;
+  assign inst2_I0 = I2;
+  assign inst2_I1 = I0;
+  assign inst3_I2 = inst2_O;
+  assign O = inst3_O;
+
+endmodule //Op
+
+module PopCount8 (
+  input [7:0] I,
+  output [3:0] O
+);
+  //Wire declarations for instance '__magma_backend_concat0' (Module corebit_concat)
+  wire  __magma_backend_concat0_in0;
+  wire [1:0] __magma_backend_concat0_out;
+  wire  __magma_backend_concat0_in1;
+  corebit_concat __magma_backend_concat0(
+    .in0(__magma_backend_concat0_in0),
+    .in1(__magma_backend_concat0_in1),
+    .out(__magma_backend_concat0_out)
+  );
+
+  //Wire declarations for instance '__magma_backend_concat1' (Module corebit_concat)
+  wire  __magma_backend_concat1_in0;
+  wire [1:0] __magma_backend_concat1_out;
+  wire  __magma_backend_concat1_in1;
+  corebit_concat __magma_backend_concat1(
+    .in0(__magma_backend_concat1_in0),
+    .in1(__magma_backend_concat1_in1),
+    .out(__magma_backend_concat1_out)
+  );
+
+  //Wire declarations for instance '__magma_backend_concat2' (Module coreir_concat)
+  wire [1:0] __magma_backend_concat2_in0;
+  wire [3:0] __magma_backend_concat2_out;
+  wire [1:0] __magma_backend_concat2_in1;
+  coreir_concat #(.width0(2),.width1(2)) __magma_backend_concat2(
+    .in0(__magma_backend_concat2_in0),
+    .in1(__magma_backend_concat2_in1),
+    .out(__magma_backend_concat2_out)
+  );
+
+  //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
+  wire  bit_const_GND_out;
+  corebit_const #(.value(0)) bit_const_GND(
+    .out(bit_const_GND_out)
+  );
+
+  //Wire declarations for instance 'inst0' (Module fold_xor3None)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_I2;
+  wire  inst0_O;
+  fold_xor3None inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .I2(inst0_I2),
+    .O(inst0_O)
+  );
+
+  //Wire declarations for instance 'inst1' (Module Op)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_I2;
+  wire  inst1_O;
+  Op inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .I2(inst1_I2),
+    .O(inst1_O)
+  );
+
+  //Wire declarations for instance 'inst10' (Module fold_xor3None)
+  wire  inst10_I0;
+  wire  inst10_I1;
+  wire  inst10_I2;
+  wire  inst10_O;
+  fold_xor3None inst10(
+    .I0(inst10_I0),
+    .I1(inst10_I1),
+    .I2(inst10_I2),
+    .O(inst10_O)
+  );
+
+  //Wire declarations for instance 'inst11' (Module Op)
+  wire  inst11_I0;
+  wire  inst11_I1;
+  wire  inst11_I2;
+  wire  inst11_O;
+  Op inst11(
+    .I0(inst11_I0),
+    .I1(inst11_I1),
+    .I2(inst11_I2),
+    .O(inst11_O)
+  );
+
+  //Wire declarations for instance 'inst12' (Module fold_xor3None)
+  wire  inst12_I0;
+  wire  inst12_I1;
+  wire  inst12_I2;
+  wire  inst12_O;
+  fold_xor3None inst12(
+    .I0(inst12_I0),
+    .I1(inst12_I1),
+    .I2(inst12_I2),
+    .O(inst12_O)
+  );
+
+  //Wire declarations for instance 'inst13' (Module Op)
+  wire  inst13_I0;
+  wire  inst13_I1;
+  wire  inst13_I2;
+  wire  inst13_O;
+  Op inst13(
+    .I0(inst13_I0),
+    .I1(inst13_I1),
+    .I2(inst13_I2),
+    .O(inst13_O)
+  );
+
+  //Wire declarations for instance 'inst2' (Module fold_xor3None)
+  wire  inst2_I0;
+  wire  inst2_I1;
+  wire  inst2_I2;
+  wire  inst2_O;
+  fold_xor3None inst2(
+    .I0(inst2_I0),
+    .I1(inst2_I1),
+    .I2(inst2_I2),
+    .O(inst2_O)
+  );
+
+  //Wire declarations for instance 'inst3' (Module Op)
+  wire  inst3_I0;
+  wire  inst3_I1;
+  wire  inst3_I2;
+  wire  inst3_O;
+  Op inst3(
+    .I0(inst3_I0),
+    .I1(inst3_I1),
+    .I2(inst3_I2),
+    .O(inst3_O)
+  );
+
+  //Wire declarations for instance 'inst4' (Module fold_xor3None)
+  wire  inst4_I0;
+  wire  inst4_I1;
+  wire  inst4_I2;
+  wire  inst4_O;
+  fold_xor3None inst4(
+    .I0(inst4_I0),
+    .I1(inst4_I1),
+    .I2(inst4_I2),
+    .O(inst4_O)
+  );
+
+  //Wire declarations for instance 'inst5' (Module Op)
+  wire  inst5_I0;
+  wire  inst5_I1;
+  wire  inst5_I2;
+  wire  inst5_O;
+  Op inst5(
+    .I0(inst5_I0),
+    .I1(inst5_I1),
+    .I2(inst5_I2),
+    .O(inst5_O)
+  );
+
+  //Wire declarations for instance 'inst6' (Module fold_xor3None)
+  wire  inst6_I0;
+  wire  inst6_I1;
+  wire  inst6_I2;
+  wire  inst6_O;
+  fold_xor3None inst6(
+    .I0(inst6_I0),
+    .I1(inst6_I1),
+    .I2(inst6_I2),
+    .O(inst6_O)
+  );
+
+  //Wire declarations for instance 'inst7' (Module Op)
+  wire  inst7_I0;
+  wire  inst7_I1;
+  wire  inst7_I2;
+  wire  inst7_O;
+  Op inst7(
+    .I0(inst7_I0),
+    .I1(inst7_I1),
+    .I2(inst7_I2),
+    .O(inst7_O)
+  );
+
+  //Wire declarations for instance 'inst8' (Module fold_xor3None)
+  wire  inst8_I0;
+  wire  inst8_I1;
+  wire  inst8_I2;
+  wire  inst8_O;
+  fold_xor3None inst8(
+    .I0(inst8_I0),
+    .I1(inst8_I1),
+    .I2(inst8_I2),
+    .O(inst8_O)
+  );
+
+  //Wire declarations for instance 'inst9' (Module Op)
+  wire  inst9_I0;
+  wire  inst9_I1;
+  wire  inst9_I2;
+  wire  inst9_O;
+  Op inst9(
+    .I0(inst9_I0),
+    .I1(inst9_I1),
+    .I2(inst9_I2),
+    .O(inst9_O)
+  );
+
+  //All the connections
+  assign __magma_backend_concat0_in0 = inst8_O;
+  assign __magma_backend_concat0_in1 = inst10_O;
+  assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
+  assign __magma_backend_concat1_in0 = inst12_O;
+  assign __magma_backend_concat1_in1 = inst13_O;
+  assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
+  assign O[3:0] = __magma_backend_concat2_out[3:0];
+  assign inst10_I2 = bit_const_GND_out;
+  assign inst11_I2 = bit_const_GND_out;
+  assign inst12_I2 = bit_const_GND_out;
+  assign inst13_I2 = bit_const_GND_out;
+  assign inst8_I2 = bit_const_GND_out;
+  assign inst9_I2 = bit_const_GND_out;
+  assign inst0_I0 = I[0];
+  assign inst0_I1 = I[1];
+  assign inst0_I2 = I[2];
+  assign inst4_I0 = inst0_O;
+  assign inst5_I0 = inst0_O;
+  assign inst1_I0 = I[0];
+  assign inst1_I1 = I[1];
+  assign inst1_I2 = I[2];
+  assign inst6_I0 = inst1_O;
+  assign inst7_I0 = inst1_O;
+  assign inst10_I0 = inst6_O;
+  assign inst10_I1 = inst9_O;
+  assign inst11_I0 = inst6_O;
+  assign inst11_I1 = inst9_O;
+  assign inst12_I1 = inst11_O;
+  assign inst13_I1 = inst11_O;
+  assign inst12_I0 = inst7_O;
+  assign inst13_I0 = inst7_O;
+  assign inst2_I0 = I[3];
+  assign inst2_I1 = I[4];
+  assign inst2_I2 = I[5];
+  assign inst4_I1 = inst2_O;
+  assign inst5_I1 = inst2_O;
+  assign inst3_I0 = I[3];
+  assign inst3_I1 = I[4];
+  assign inst3_I2 = I[5];
+  assign inst6_I1 = inst3_O;
+  assign inst7_I1 = inst3_O;
+  assign inst4_I2 = I[6];
+  assign inst8_I0 = inst4_O;
+  assign inst9_I0 = inst4_O;
+  assign inst5_I2 = I[6];
+  assign inst6_I2 = inst5_O;
+  assign inst7_I2 = inst5_O;
+  assign inst8_I1 = I[7];
+  assign inst9_I1 = I[7];
+
+endmodule //PopCount8
