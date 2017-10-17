@@ -1,13 +1,13 @@
 circuit LFSR : 
   module LFSR : 
-    input clock : Clock
+    input CLK : Clock
     input reset : UInt<1>
     output io : {flip en : UInt<1>, out : UInt<1>, state : UInt}
     
-    clock is invalid
+    CLK is invalid
     reset is invalid
     io is invalid
-    reg state : UInt<4>, clock with : (reset => (reset, UInt<4>("h0f"))) @[cmd35.sc 8:24]
+    reg state : UInt<4>, CLK with : (reset => (reset, UInt<4>("h0f"))) @[cmd35.sc 8:24]
     wire xors : UInt<1>[5] @[cmd35.sc 9:20]
     xors is invalid @[cmd35.sc 9:20]
     xors[0] <= UInt<1>("h00") @[cmd35.sc 11:13]
