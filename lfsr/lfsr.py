@@ -13,14 +13,12 @@ def lfsr_sim_factory(N, init=1):
     @coroutine
     def lfsr_sim():
         regs = int2seq(0, N)
-        LAST_RESET = None
         while True:
             O = seq2int(regs)
-            RESET = yield O
-            if RESET == 0:
+            inputs = yield O
+            if inputs["RESET"] == 0:
                 regs = int2seq(init, N)
                 continue
-            LAST_RESET = RESET
             I = 0
             for tap in taps:
                 I ^= regs[tap - 1]

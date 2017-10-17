@@ -1,4 +1,4 @@
-{"top":"global.Counter4",
+{"top":"global.Counter4R",
 "namespaces":{
   "global":{
     "modules":{
@@ -20,10 +20,11 @@
           ["inst0.out","self.O"]
         ]
       },
-      "Counter4":{
+      "Counter4R":{
         "type":["Record",{
           "O":["Array",4,"Bit"],
-          "CLK":["Named","coreir.clkIn"]
+          "CLK":["Named","coreir.clkIn"],
+          "RESET":["Named","coreir.rstIn"]
         }],
         "instances":{
           "__magma_backend_concat0":{
@@ -48,7 +49,7 @@
             "modref":"global.Add4"
           },
           "inst1":{
-            "modref":"global.Register4"
+            "modref":"global.Register4R"
           }
         },
         "connections":[
@@ -62,14 +63,16 @@
           ["inst0.I0","inst1.O"],
           ["inst0.O","inst1.I"],
           ["inst1.CLK","self.CLK"],
-          ["inst1.O","self.O"]
+          ["inst1.O","self.O"],
+          ["inst1.RESET","self.RESET"]
         ]
       },
-      "DFF_init0_has_ceFalse_has_resetFalse_has_setFalse":{
+      "DFF_init0_has_ceFalse_has_resetTrue_has_setFalse":{
         "type":["Record",{
           "I":"BitIn",
           "O":"Bit",
-          "CLK":["Named","coreir.clkIn"]
+          "CLK":["Named","coreir.clkIn"],
+          "RESET":["Named","coreir.rstIn"]
         }],
         "instances":{
           "inst0":{
@@ -80,14 +83,16 @@
         "connections":[
           ["inst0.clk","self.CLK"],
           ["inst0.in","self.I"],
-          ["inst0.out","self.O"]
+          ["inst0.out","self.O"],
+          ["inst0.rst","self.RESET"]
         ]
       },
-      "Register4":{
+      "Register4R":{
         "type":["Record",{
           "I":["Array",4,"BitIn"],
           "O":["Array",4,"Bit"],
-          "CLK":["Named","coreir.clkIn"]
+          "CLK":["Named","coreir.clkIn"],
+          "RESET":["Named","coreir.rstIn"]
         }],
         "instances":{
           "__magma_backend_concat0":{
@@ -101,16 +106,16 @@
             "genargs":{"width0":["Int",2], "width1":["Int",2]}
           },
           "inst0":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
           },
           "inst1":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
           },
           "inst2":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
           },
           "inst3":{
-            "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
+            "modref":"global.DFF_init0_has_ceFalse_has_resetTrue_has_setFalse"
           }
         },
         "connections":[
@@ -123,12 +128,16 @@
           ["__magma_backend_concat2.out","self.O"],
           ["inst0.CLK","self.CLK"],
           ["inst0.I","self.I.0"],
+          ["inst0.RESET","self.RESET"],
           ["inst1.CLK","self.CLK"],
           ["inst1.I","self.I.1"],
+          ["inst1.RESET","self.RESET"],
           ["inst2.CLK","self.CLK"],
           ["inst2.I","self.I.2"],
+          ["inst2.RESET","self.RESET"],
           ["inst3.CLK","self.CLK"],
-          ["inst3.I","self.I.3"]
+          ["inst3.I","self.I.3"],
+          ["inst3.RESET","self.RESET"]
         ]
       }
     }

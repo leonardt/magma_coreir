@@ -1,5 +1,14 @@
 
 
+module corebit_and (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 & in1;
+
+endmodule //corebit_and
+
 module corebit_concat (
   input in0,
   input in1,
@@ -16,14 +25,14 @@ module corebit_const #(parameter value=1) (
 
 endmodule //corebit_const
 
-module corebit_or (
+module corebit_xor (
   input in0,
   input in1,
   output out
 );
-  assign out = in0 | in1;
+  assign out = in0 ^ in1;
 
-endmodule //corebit_or
+endmodule //corebit_xor
 
 module coreir_concat #(parameter width0=1, parameter width1=1) (
   input [width0-1:0] in0,
@@ -34,80 +43,14 @@ module coreir_concat #(parameter width0=1, parameter width1=1) (
 
 endmodule //coreir_concat
 
-module corebit_xor (
+module corebit_or (
   input in0,
   input in1,
   output out
 );
-  assign out = in0 ^ in1;
+  assign out = in0 | in1;
 
-endmodule //corebit_xor
-
-module xor_wrapped (
-  input  I0,
-  input  I1,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module corebit_xor)
-  wire  inst0_in0;
-  wire  inst0_out;
-  wire  inst0_in1;
-  corebit_xor inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0 = I0;
-  assign inst0_in1 = I1;
-  assign O = inst0_out;
-
-endmodule //xor_wrapped
-
-module fold_xor3None (
-  input  I0,
-  input  I1,
-  input  I2,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module xor_wrapped)
-  wire  inst0_I0;
-  wire  inst0_I1;
-  wire  inst0_O;
-  xor_wrapped inst0(
-    .I0(inst0_I0),
-    .I1(inst0_I1),
-    .O(inst0_O)
-  );
-
-  //Wire declarations for instance 'inst1' (Module xor_wrapped)
-  wire  inst1_I0;
-  wire  inst1_I1;
-  wire  inst1_O;
-  xor_wrapped inst1(
-    .I0(inst1_I0),
-    .I1(inst1_I1),
-    .O(inst1_O)
-  );
-
-  //All the connections
-  assign inst0_I0 = I0;
-  assign inst0_I1 = I1;
-  assign inst1_I0 = inst0_O;
-  assign inst1_I1 = I2;
-  assign O = inst1_O;
-
-endmodule //fold_xor3None
-
-module corebit_and (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 & in1;
-
-endmodule //corebit_and
+endmodule //corebit_or
 
 module and_wrapped (
   input  I0,
@@ -249,6 +192,63 @@ module Op (
   assign O = inst3_O;
 
 endmodule //Op
+
+module xor_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_xor)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_xor inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //xor_wrapped
+
+module fold_xor3None (
+  input  I0,
+  input  I1,
+  input  I2,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module xor_wrapped)
+  wire  inst0_I0;
+  wire  inst0_I1;
+  wire  inst0_O;
+  xor_wrapped inst0(
+    .I0(inst0_I0),
+    .I1(inst0_I1),
+    .O(inst0_O)
+  );
+
+  //Wire declarations for instance 'inst1' (Module xor_wrapped)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_O;
+  xor_wrapped inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .O(inst1_O)
+  );
+
+  //All the connections
+  assign inst0_I0 = I0;
+  assign inst0_I1 = I1;
+  assign inst1_I0 = inst0_O;
+  assign inst1_I1 = I2;
+  assign O = inst1_O;
+
+endmodule //fold_xor3None
 
 module PopCount8 (
   input [7:0] I,
