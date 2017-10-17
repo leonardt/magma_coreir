@@ -2,8 +2,8 @@ from mantle.common import DefineCounter
 from magma.transforms import flatten
 from magma.testing.coroutine import coroutine, testvectors
 
-main = DefineCounter(4)
-# print(repr(main))
+main = DefineCounter(4, cout=False)
+print(repr(main))
 
 
 def counter_sim_factory(N):

@@ -2,48 +2,40 @@
 "namespaces":{
   "global":{
     "modules":{
-      "Add4_cout":{
+      "Add4":{
         "type":["Record",{
           "I0":["Array",4,"BitIn"],
           "I1":["Array",4,"BitIn"],
-          "O":["Array",4,"Bit"],
-          "COUT":"Bit"
+          "O":["Array",4,"Bit"]
         }],
         "instances":{
-          "bit_const_GND":{
-            "modref":"corebit.const",
-            "modargs":{"value":["Bool",false]}
-          },
           "inst0":{
             "genref":"coreir.add",
-            "genargs":{"width":["Int",5]}
+            "genargs":{"width":["Int",4]}
           }
         },
         "connections":[
-          ["bit_const_GND.out","inst0.in0.4"],
-          ["bit_const_GND.out","inst0.in1.4"],
-          ["self.COUT","inst0.out.4"],
-          ["inst0.in0.0","self.I0.0"],
-          ["inst0.in0.1","self.I0.1"],
-          ["inst0.in0.2","self.I0.2"],
-          ["inst0.in0.3","self.I0.3"],
-          ["inst0.in1.0","self.I1.0"],
-          ["inst0.in1.1","self.I1.1"],
-          ["inst0.in1.2","self.I1.2"],
-          ["inst0.in1.3","self.I1.3"],
-          ["inst0.out.0","self.O.0"],
-          ["inst0.out.1","self.O.1"],
-          ["inst0.out.2","self.O.2"],
-          ["inst0.out.3","self.O.3"]
+          ["inst0.in0","self.I0"],
+          ["inst0.in1","self.I1"],
+          ["inst0.out","self.O"]
         ]
       },
       "Counter4":{
         "type":["Record",{
           "O":["Array",4,"Bit"],
-          "COUT":"Bit",
           "CLK":["Named","coreir.clkIn"]
         }],
         "instances":{
+          "__magma_backend_concat0":{
+            "modref":"corebit.concat"
+          },
+          "__magma_backend_concat1":{
+            "modref":"corebit.concat"
+          },
+          "__magma_backend_concat2":{
+            "genref":"coreir.concat",
+            "genargs":{"width0":["Int",2], "width1":["Int",2]}
+          },
           "bit_const_GND":{
             "modref":"corebit.const",
             "modargs":{"value":["Bool",false]}
@@ -53,18 +45,20 @@
             "modargs":{"value":["Bool",true]}
           },
           "inst0":{
-            "modref":"global.Add4_cout"
+            "modref":"global.Add4"
           },
           "inst1":{
             "modref":"global.Register4"
           }
         },
         "connections":[
-          ["bit_const_GND.out","inst0.I1.1"],
-          ["bit_const_GND.out","inst0.I1.2"],
-          ["bit_const_GND.out","inst0.I1.3"],
-          ["bit_const_VCC.out","inst0.I1.0"],
-          ["inst0.COUT","self.COUT"],
+          ["__magma_backend_concat0.in0","bit_const_VCC.out"],
+          ["__magma_backend_concat0.in1","bit_const_GND.out"],
+          ["__magma_backend_concat0.out","__magma_backend_concat2.in0"],
+          ["__magma_backend_concat1.in0","bit_const_GND.out"],
+          ["__magma_backend_concat1.in1","bit_const_GND.out"],
+          ["__magma_backend_concat1.out","__magma_backend_concat2.in1"],
+          ["__magma_backend_concat2.out","inst0.I1"],
           ["inst0.I0","inst1.O"],
           ["inst0.O","inst1.I"],
           ["inst1.CLK","self.CLK"],
@@ -79,8 +73,7 @@
         }],
         "instances":{
           "inst0":{
-            "genref":"mantle.DFF",
-            "genargs":{"has_clr":["Bool",false], "has_en":["Bool",false], "has_rst":["Bool",false]},
+            "modref":"corebit.dff",
             "modargs":{"init":["Bool",false]}
           }
         },
@@ -97,6 +90,16 @@
           "CLK":["Named","coreir.clkIn"]
         }],
         "instances":{
+          "__magma_backend_concat0":{
+            "modref":"corebit.concat"
+          },
+          "__magma_backend_concat1":{
+            "modref":"corebit.concat"
+          },
+          "__magma_backend_concat2":{
+            "genref":"coreir.concat",
+            "genargs":{"width0":["Int",2], "width1":["Int",2]}
+          },
           "inst0":{
             "modref":"global.DFF_init0_has_ceFalse_has_resetFalse_has_setFalse"
           },
@@ -111,18 +114,21 @@
           }
         },
         "connections":[
+          ["__magma_backend_concat0.in0","inst0.O"],
+          ["__magma_backend_concat0.in1","inst1.O"],
+          ["__magma_backend_concat0.out","__magma_backend_concat2.in0"],
+          ["__magma_backend_concat1.in0","inst2.O"],
+          ["__magma_backend_concat1.in1","inst3.O"],
+          ["__magma_backend_concat1.out","__magma_backend_concat2.in1"],
+          ["__magma_backend_concat2.out","self.O"],
           ["inst0.CLK","self.CLK"],
           ["inst0.I","self.I.0"],
-          ["inst0.O","self.O.0"],
           ["inst1.CLK","self.CLK"],
           ["inst1.I","self.I.1"],
-          ["inst1.O","self.O.1"],
           ["inst2.CLK","self.CLK"],
           ["inst2.I","self.I.2"],
-          ["inst2.O","self.O.2"],
           ["inst3.CLK","self.CLK"],
-          ["inst3.I","self.I.3"],
-          ["inst3.O","self.O.3"]
+          ["inst3.I","self.I.3"]
         ]
       }
     }

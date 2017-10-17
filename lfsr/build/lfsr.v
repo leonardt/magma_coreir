@@ -1,48 +1,46 @@
-//Module: concat defined externally
 
 
-module lfsr81False (
-  input  CLK,
-  output [7:0] O,
-  input  RESET
+module corebit_concat (
+  input in0,
+  input in1,
+  output [1:0] out
 );
-  //Wire declarations for instance 'inst0' (Module SIPO8R_0001)
-  wire  inst0_CLK;
-  wire  inst0_I;
-  wire  inst0_RESET;
-  wire [7:0] inst0_O;
-  SIPO8R_0001 inst0(
-    .CLK(inst0_CLK),
-    .I(inst0_I),
-    .O(inst0_O),
-    .RESET(inst0_RESET)
-  );
+  assign out = {in0, in1};
 
-  //Wire declarations for instance 'inst1' (Module fold_xor4None)
-  wire  inst1_I0;
-  wire  inst1_I1;
-  wire  inst1_I2;
-  wire  inst1_I3;
-  wire  inst1_O;
-  fold_xor4None inst1(
-    .I0(inst1_I0),
-    .I1(inst1_I1),
-    .I2(inst1_I2),
-    .I3(inst1_I3),
-    .O(inst1_O)
-  );
+endmodule //corebit_concat
 
-  //All the connections
-  assign inst0_CLK = CLK;
-  assign inst0_I = inst1_O;
-  assign O[7:0] = inst0_O[7:0];
-  assign inst0_RESET = RESET;
-  assign inst1_I0 = inst0_O[7];
-  assign inst1_I1 = inst0_O[5];
-  assign inst1_I2 = inst0_O[4];
-  assign inst1_I3 = inst0_O[3];
+module dff #(parameter init=1) (
+  input clk,
+  input in,
+  input rst,
+  output out
+);
+reg outReg;
+always @(posedge clk) begin
+  if (!rst) outReg <= init;
+  else outReg <= in;
+end
+assign out = outReg;
 
-endmodule //lfsr81False
+endmodule //dff
+
+module corebit_xor (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 ^ in1;
+
+endmodule //corebit_xor
+
+module coreir_concat #(parameter width0=1, parameter width1=1) (
+  input [width0-1:0] in0,
+  input [width1-1:0] in1,
+  output [width0+width1-1:0] out
+);
+  assign out = {in0,in1};
+
+endmodule //coreir_concat
 
 module xor_wrapped (
   input  I0,
@@ -140,14 +138,31 @@ module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
 
 endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
 
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
+module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
+  input  CLK,
+  input  I,
+  output  O,
+  input  RESET
 );
-  assign out = {in0,in1};
+  //Wire declarations for instance 'inst0' (Module dff)
+  wire  inst0_clk;
+  wire  inst0_rst;
+  wire  inst0_in;
+  wire  inst0_out;
+  dff #(.init(0)) inst0(
+    .clk(inst0_clk),
+    .in(inst0_in),
+    .out(inst0_out),
+    .rst(inst0_rst)
+  );
 
-endmodule //coreir_concat
+  //All the connections
+  assign inst0_clk = CLK;
+  assign inst0_in = I;
+  assign O = inst0_out;
+  assign inst0_rst = RESET;
+
+endmodule //DFF_init1_has_ceFalse_has_resetTrue_has_setFalse
 
 module SIPO8R_0001 (
   input  CLK,
@@ -155,41 +170,41 @@ module SIPO8R_0001 (
   output [7:0] O,
   input  RESET
 );
-  //Wire declarations for instance '__magma_backend_concat0' (Module concat)
+  //Wire declarations for instance '__magma_backend_concat0' (Module corebit_concat)
   wire  __magma_backend_concat0_in0;
   wire [1:0] __magma_backend_concat0_out;
   wire  __magma_backend_concat0_in1;
-  concat __magma_backend_concat0(
+  corebit_concat __magma_backend_concat0(
     .in0(__magma_backend_concat0_in0),
     .in1(__magma_backend_concat0_in1),
     .out(__magma_backend_concat0_out)
   );
 
-  //Wire declarations for instance '__magma_backend_concat1' (Module concat)
+  //Wire declarations for instance '__magma_backend_concat1' (Module corebit_concat)
   wire  __magma_backend_concat1_in0;
   wire [1:0] __magma_backend_concat1_out;
   wire  __magma_backend_concat1_in1;
-  concat __magma_backend_concat1(
+  corebit_concat __magma_backend_concat1(
     .in0(__magma_backend_concat1_in0),
     .in1(__magma_backend_concat1_in1),
     .out(__magma_backend_concat1_out)
   );
 
-  //Wire declarations for instance '__magma_backend_concat2' (Module concat)
+  //Wire declarations for instance '__magma_backend_concat2' (Module corebit_concat)
   wire  __magma_backend_concat2_in0;
   wire [1:0] __magma_backend_concat2_out;
   wire  __magma_backend_concat2_in1;
-  concat __magma_backend_concat2(
+  corebit_concat __magma_backend_concat2(
     .in0(__magma_backend_concat2_in0),
     .in1(__magma_backend_concat2_in1),
     .out(__magma_backend_concat2_out)
   );
 
-  //Wire declarations for instance '__magma_backend_concat3' (Module concat)
+  //Wire declarations for instance '__magma_backend_concat3' (Module corebit_concat)
   wire  __magma_backend_concat3_in0;
   wire [1:0] __magma_backend_concat3_out;
   wire  __magma_backend_concat3_in1;
-  concat __magma_backend_concat3(
+  corebit_concat __magma_backend_concat3(
     .in0(__magma_backend_concat3_in0),
     .in1(__magma_backend_concat3_in1),
     .out(__magma_backend_concat3_out)
@@ -364,61 +379,45 @@ module SIPO8R_0001 (
 
 endmodule //SIPO8R_0001
 
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
-module dff #(parameter init=1) (
-  input clk,
-  input in,
-  input rst,
-  output out
-);
-reg outReg;
-always @(posedge clk) begin
-  if (!rst) outReg <= init;
-  else outReg <= in;
-end
-assign out = outReg;
-
-endmodule //dff
-
-module DFF_init1_has_ceFalse_has_resetTrue_has_setFalse (
+module lfsr81False (
   input  CLK,
-  input  I,
-  output  O,
+  output [7:0] O,
   input  RESET
 );
-  //Wire declarations for instance 'inst0' (Module dff)
-  wire  inst0_clk;
-  wire  inst0_rst;
-  wire  inst0_in;
-  wire  inst0_out;
-  dff #(.init(0)) inst0(
-    .clk(inst0_clk),
-    .in(inst0_in),
-    .out(inst0_out),
-    .rst(inst0_rst)
+  //Wire declarations for instance 'inst0' (Module SIPO8R_0001)
+  wire  inst0_CLK;
+  wire  inst0_I;
+  wire  inst0_RESET;
+  wire [7:0] inst0_O;
+  SIPO8R_0001 inst0(
+    .CLK(inst0_CLK),
+    .I(inst0_I),
+    .O(inst0_O),
+    .RESET(inst0_RESET)
+  );
+
+  //Wire declarations for instance 'inst1' (Module fold_xor4None)
+  wire  inst1_I0;
+  wire  inst1_I1;
+  wire  inst1_I2;
+  wire  inst1_I3;
+  wire  inst1_O;
+  fold_xor4None inst1(
+    .I0(inst1_I0),
+    .I1(inst1_I1),
+    .I2(inst1_I2),
+    .I3(inst1_I3),
+    .O(inst1_O)
   );
 
   //All the connections
-  assign inst0_clk = CLK;
-  assign inst0_in = I;
-  assign O = inst0_out;
-  assign inst0_rst = RESET;
+  assign inst0_CLK = CLK;
+  assign inst0_I = inst1_O;
+  assign O[7:0] = inst0_O[7:0];
+  assign inst0_RESET = RESET;
+  assign inst1_I0 = inst0_O[7];
+  assign inst1_I1 = inst0_O[5];
+  assign inst1_I2 = inst0_O[4];
+  assign inst1_I3 = inst0_O[3];
 
-endmodule //DFF_init1_has_ceFalse_has_resetTrue_has_setFalse
-
-module corebit_xor (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 ^ in1;
-
-endmodule //corebit_xor
+endmodule //lfsr81False

@@ -25,6 +25,7 @@ echo -e "Running coreir to convert .json circuit to .fir (firrtl)"
 coreir -i build/$TEST.json -o build/$TEST.fir
 
 echo -e "Running firrtl-interpreter test"
-../firrtl-interpreter/run-test-vec.sh -f build/$TEST.fir -tv build/$TEST.vec -so
+cd ../firrtl-interpreter
+./run-test-vec.sh -f ../$TEST/build/$TEST.fir -tv ../$TEST/build/$TEST.vec -so
 
 echo -e "${GREEN}PASSED (magma->coreir->firrtl + firrtl-interpreter)${NC}"
