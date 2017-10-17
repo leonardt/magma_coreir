@@ -2,29 +2,30 @@
 
 set -e
 
-TEST="popcount8"
+TEST="popcount"
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 export MANTLE="coreir"
 echo -e "Running magma to generate coreir .json"
-magma -o coreir -m coreir popcount8.py
+../magma/bin/magma -o coreir -m coreir $TEST.py
 
 echo -e "Running coreir to convert .json circuit to .v (verilog)"
-coreir -i build/popcount8.json -o build/popcount8.v
+coreir -i build/$TEST.json -o build/$TEST.v
 
 echo -e "Generating test vectors from silica"
-../test-vectors -i popcount8.py -o build/popcount8.vec -n 32
+../test-vectors -i $TEST.py -o build/$TEST.vec -n 32
 
 echo -e "Running verilator test"
-../coreir-test -i build/popcount8.json -t build/popcount8.vec
+../coreir-test -i build/$TEST.json -t build/$TEST.vec
 
 echo -e "${GREEN}PASSED (magma->coreir->verilog + verilator)${NC}"
 
 echo -e "Running coreir to convert .json circuit to .fir (firrtl)"
-coreir -i build/popcount8.json -o build/popcount8.fir
+coreir -i build/$TEST.json -o build/$TEST.fir
 
 echo -e "Running firrtl-interpreter test"
-../firrtl-interpreter/run-test-vec.sh -f build/popcount8.fir -tv build/popcount8.vec -so
+cd ../firrtl-interpreter
+./run-test-vec.sh -f ../$TEST/build/$TEST.fir -tv ../$TEST/build/$TEST.vec -so
 
 echo -e "${GREEN}PASSED (magma->coreir->firrtl + firrtl-interpreter)${NC}"

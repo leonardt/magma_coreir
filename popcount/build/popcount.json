@@ -100,11 +100,11 @@
           }
         },
         "connections":[
-          ["__magma_backend_concat0.in0","inst8.O"],
-          ["__magma_backend_concat0.in1","inst10.O"],
+          ["__magma_backend_concat0.in0","inst13.O"],
+          ["__magma_backend_concat0.in1","inst12.O"],
           ["__magma_backend_concat0.out","__magma_backend_concat2.in0"],
-          ["__magma_backend_concat1.in0","inst12.O"],
-          ["__magma_backend_concat1.in1","inst13.O"],
+          ["__magma_backend_concat1.in0","inst10.O"],
+          ["__magma_backend_concat1.in1","inst8.O"],
           ["__magma_backend_concat1.out","__magma_backend_concat2.in1"],
           ["__magma_backend_concat2.out","self.O"],
           ["bit_const_GND.out","inst10.I2"],
