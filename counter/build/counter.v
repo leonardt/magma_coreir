@@ -1,13 +1,24 @@
 
 
-module corebit_concat (
-  input in0,
-  input in1,
-  output [1:0] out
+module corebit_const #(parameter value=1) (
+  output out
 );
-  assign out = {in0, in1};
+  assign out = value;
 
-endmodule //corebit_concat
+endmodule //corebit_const
+
+module coreir_reg #(parameter init=1, parameter width=1) (
+  input clk,
+  input [width-1:0] in,
+  output [width-1:0] out
+);
+reg [width-1:0] outReg=init;
+always @(posedge clk) begin
+  outReg <= in;
+end
+assign out = outReg;
+
+endmodule //coreir_reg
 
 module coreir_add #(parameter width=1) (
   input [width-1:0] in0,
@@ -17,37 +28,6 @@ module coreir_add #(parameter width=1) (
   assign out = in0 + in1;
 
 endmodule //coreir_add
-
-module corebit_const #(parameter value=1) (
-  output out
-);
-  assign out = value;
-
-endmodule //corebit_const
-
-module dff #(parameter init=1) (
-  input clk,
-  input in,
-  input rst,
-  output out
-);
-reg outReg;
-always @(posedge clk) begin
-  if (!rst) outReg <= in;
-  else outReg <= init;
-end
-assign out = outReg;
-
-endmodule //dff
-
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
 
 module Add4 (
   input [3:0] I0,
@@ -71,31 +51,50 @@ module Add4 (
 
 endmodule //Add4
 
-module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse (
+module reg_U1 #(parameter init=1) (
+  input  clk,
+  input [0:0] in,
+  output [0:0] out
+);
+  //Wire declarations for instance 'reg0' (Module coreir_reg)
+  wire  reg0_clk;
+  wire [0:0] reg0_in;
+  wire [0:0] reg0_out;
+  coreir_reg #(.init(init),.width(1)) reg0(
+    .clk(reg0_clk),
+    .in(reg0_in),
+    .out(reg0_out)
+  );
+
+  //All the connections
+  assign reg0_clk = clk;
+  assign reg0_in[0:0] = in[0:0];
+  assign out[0:0] = reg0_out[0:0];
+
+endmodule //reg_U1
+
+module DFF_init0_has_ceFalse_has_resetTrue (
   input  CLK,
   input  I,
   output  O,
   input  RESET
 );
-  //Wire declarations for instance 'inst0' (Module dff)
+  //Wire declarations for instance 'inst0' (Module reg_U1)
+  wire [0:0] inst0_in;
   wire  inst0_clk;
-  wire  inst0_rst;
-  wire  inst0_in;
-  wire  inst0_out;
-  dff #(.init(0)) inst0(
+  wire [0:0] inst0_out;
+  reg_U1 #(.init(1'd0)) inst0(
     .clk(inst0_clk),
     .in(inst0_in),
-    .out(inst0_out),
-    .rst(inst0_rst)
+    .out(inst0_out)
   );
 
   //All the connections
   assign inst0_clk = CLK;
-  assign inst0_in = I;
-  assign O = inst0_out;
-  assign inst0_rst = RESET;
+  assign inst0_in[0] = I;
+  assign O = inst0_out[0];
 
-endmodule //DFF_init0_has_ceFalse_has_resetTrue_has_setFalse
+endmodule //DFF_init0_has_ceFalse_has_resetTrue
 
 module Register4R (
   input  CLK,
@@ -103,78 +102,48 @@ module Register4R (
   output [3:0] O,
   input  RESET
 );
-  //Wire declarations for instance '__magma_backend_concat0' (Module corebit_concat)
-  wire  __magma_backend_concat0_in0;
-  wire [1:0] __magma_backend_concat0_out;
-  wire  __magma_backend_concat0_in1;
-  corebit_concat __magma_backend_concat0(
-    .in0(__magma_backend_concat0_in0),
-    .in1(__magma_backend_concat0_in1),
-    .out(__magma_backend_concat0_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat1' (Module corebit_concat)
-  wire  __magma_backend_concat1_in0;
-  wire [1:0] __magma_backend_concat1_out;
-  wire  __magma_backend_concat1_in1;
-  corebit_concat __magma_backend_concat1(
-    .in0(__magma_backend_concat1_in0),
-    .in1(__magma_backend_concat1_in1),
-    .out(__magma_backend_concat1_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat2' (Module coreir_concat)
-  wire [1:0] __magma_backend_concat2_in0;
-  wire [3:0] __magma_backend_concat2_out;
-  wire [1:0] __magma_backend_concat2_in1;
-  coreir_concat #(.width0(2),.width1(2)) __magma_backend_concat2(
-    .in0(__magma_backend_concat2_in0),
-    .in1(__magma_backend_concat2_in1),
-    .out(__magma_backend_concat2_out)
-  );
-
-  //Wire declarations for instance 'inst0' (Module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse)
+  //Wire declarations for instance 'inst0' (Module DFF_init0_has_ceFalse_has_resetTrue)
   wire  inst0_CLK;
   wire  inst0_I;
   wire  inst0_RESET;
   wire  inst0_O;
-  DFF_init0_has_ceFalse_has_resetTrue_has_setFalse inst0(
+  DFF_init0_has_ceFalse_has_resetTrue inst0(
     .CLK(inst0_CLK),
     .I(inst0_I),
     .O(inst0_O),
     .RESET(inst0_RESET)
   );
 
-  //Wire declarations for instance 'inst1' (Module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse)
+  //Wire declarations for instance 'inst1' (Module DFF_init0_has_ceFalse_has_resetTrue)
   wire  inst1_CLK;
   wire  inst1_I;
   wire  inst1_RESET;
   wire  inst1_O;
-  DFF_init0_has_ceFalse_has_resetTrue_has_setFalse inst1(
+  DFF_init0_has_ceFalse_has_resetTrue inst1(
     .CLK(inst1_CLK),
     .I(inst1_I),
     .O(inst1_O),
     .RESET(inst1_RESET)
   );
 
-  //Wire declarations for instance 'inst2' (Module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse)
+  //Wire declarations for instance 'inst2' (Module DFF_init0_has_ceFalse_has_resetTrue)
   wire  inst2_CLK;
   wire  inst2_I;
   wire  inst2_RESET;
   wire  inst2_O;
-  DFF_init0_has_ceFalse_has_resetTrue_has_setFalse inst2(
+  DFF_init0_has_ceFalse_has_resetTrue inst2(
     .CLK(inst2_CLK),
     .I(inst2_I),
     .O(inst2_O),
     .RESET(inst2_RESET)
   );
 
-  //Wire declarations for instance 'inst3' (Module DFF_init0_has_ceFalse_has_resetTrue_has_setFalse)
+  //Wire declarations for instance 'inst3' (Module DFF_init0_has_ceFalse_has_resetTrue)
   wire  inst3_CLK;
   wire  inst3_I;
   wire  inst3_RESET;
   wire  inst3_O;
-  DFF_init0_has_ceFalse_has_resetTrue_has_setFalse inst3(
+  DFF_init0_has_ceFalse_has_resetTrue inst3(
     .CLK(inst3_CLK),
     .I(inst3_I),
     .O(inst3_O),
@@ -182,24 +151,21 @@ module Register4R (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = inst3_O;
-  assign __magma_backend_concat0_in1 = inst2_O;
-  assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
-  assign __magma_backend_concat1_in0 = inst1_O;
-  assign __magma_backend_concat1_in1 = inst0_O;
-  assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
-  assign O[3:0] = __magma_backend_concat2_out[3:0];
   assign inst0_CLK = CLK;
   assign inst0_I = I[0];
+  assign O[0] = inst0_O;
   assign inst0_RESET = RESET;
   assign inst1_CLK = CLK;
   assign inst1_I = I[1];
+  assign O[1] = inst1_O;
   assign inst1_RESET = RESET;
   assign inst2_CLK = CLK;
   assign inst2_I = I[2];
+  assign O[2] = inst2_O;
   assign inst2_RESET = RESET;
   assign inst3_CLK = CLK;
   assign inst3_I = I[3];
+  assign O[3] = inst3_O;
   assign inst3_RESET = RESET;
 
 endmodule //Register4R
@@ -209,36 +175,6 @@ module Counter4R (
   output [3:0] O,
   input  RESET
 );
-  //Wire declarations for instance '__magma_backend_concat0' (Module corebit_concat)
-  wire  __magma_backend_concat0_in0;
-  wire [1:0] __magma_backend_concat0_out;
-  wire  __magma_backend_concat0_in1;
-  corebit_concat __magma_backend_concat0(
-    .in0(__magma_backend_concat0_in0),
-    .in1(__magma_backend_concat0_in1),
-    .out(__magma_backend_concat0_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat1' (Module corebit_concat)
-  wire  __magma_backend_concat1_in0;
-  wire [1:0] __magma_backend_concat1_out;
-  wire  __magma_backend_concat1_in1;
-  corebit_concat __magma_backend_concat1(
-    .in0(__magma_backend_concat1_in0),
-    .in1(__magma_backend_concat1_in1),
-    .out(__magma_backend_concat1_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat2' (Module coreir_concat)
-  wire [1:0] __magma_backend_concat2_in0;
-  wire [3:0] __magma_backend_concat2_out;
-  wire [1:0] __magma_backend_concat2_in1;
-  coreir_concat #(.width0(2),.width1(2)) __magma_backend_concat2(
-    .in0(__magma_backend_concat2_in0),
-    .in1(__magma_backend_concat2_in1),
-    .out(__magma_backend_concat2_out)
-  );
-
   //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
   wire  bit_const_GND_out;
   corebit_const #(.value(0)) bit_const_GND(
@@ -274,13 +210,10 @@ module Counter4R (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = bit_const_GND_out;
-  assign __magma_backend_concat0_in1 = bit_const_GND_out;
-  assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
-  assign __magma_backend_concat1_in0 = bit_const_GND_out;
-  assign __magma_backend_concat1_in1 = bit_const_VCC_out;
-  assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
-  assign inst0_I1[3:0] = __magma_backend_concat2_out[3:0];
+  assign inst0_I1[1] = bit_const_GND_out;
+  assign inst0_I1[2] = bit_const_GND_out;
+  assign inst0_I1[3] = bit_const_GND_out;
+  assign inst0_I1[0] = bit_const_VCC_out;
   assign inst0_I0[3:0] = inst1_O[3:0];
   assign inst1_I[3:0] = inst0_O[3:0];
   assign inst1_CLK = CLK;

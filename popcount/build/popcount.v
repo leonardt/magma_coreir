@@ -1,61 +1,5 @@
 
 
-module corebit_and (
-  input in0,
-  input in1,
-  output out
-);
-  assign out = in0 & in1;
-
-endmodule //corebit_and
-
-module corebit_concat (
-  input in0,
-  input in1,
-  output [1:0] out
-);
-  assign out = {in0, in1};
-
-endmodule //corebit_concat
-
-module corebit_const #(parameter value=1) (
-  output out
-);
-  assign out = value;
-
-endmodule //corebit_const
-
-module coreir_concat #(parameter width0=1, parameter width1=1) (
-  input [width0-1:0] in0,
-  input [width1-1:0] in1,
-  output [width0+width1-1:0] out
-);
-  assign out = {in0,in1};
-
-endmodule //coreir_concat
-
-module and_wrapped (
-  input  I0,
-  input  I1,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module corebit_and)
-  wire  inst0_in0;
-  wire  inst0_out;
-  wire  inst0_in1;
-  corebit_and inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0 = I0;
-  assign inst0_in1 = I1;
-  assign O = inst0_out;
-
-endmodule //and_wrapped
-
 module corebit_or (
   input in0,
   input in1,
@@ -65,14 +9,21 @@ module corebit_or (
 
 endmodule //corebit_or
 
-module corebit_xor (
+module corebit_and (
   input in0,
   input in1,
   output out
 );
-  assign out = in0 ^ in1;
+  assign out = in0 & in1;
 
-endmodule //corebit_xor
+endmodule //corebit_and
+
+module corebit_const #(parameter value=1) (
+  output out
+);
+  assign out = value;
+
+endmodule //corebit_const
 
 module or_wrapped (
   input  I0,
@@ -95,6 +46,59 @@ module or_wrapped (
   assign O = inst0_out;
 
 endmodule //or_wrapped
+
+module corebit_xor (
+  input in0,
+  input in1,
+  output out
+);
+  assign out = in0 ^ in1;
+
+endmodule //corebit_xor
+
+module xor_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_xor)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_xor inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //xor_wrapped
+
+module and_wrapped (
+  input  I0,
+  input  I1,
+  output  O
+);
+  //Wire declarations for instance 'inst0' (Module corebit_and)
+  wire  inst0_in0;
+  wire  inst0_out;
+  wire  inst0_in1;
+  corebit_and inst0(
+    .in0(inst0_in0),
+    .in1(inst0_in1),
+    .out(inst0_out)
+  );
+
+  //All the connections
+  assign inst0_in0 = I0;
+  assign inst0_in1 = I1;
+  assign O = inst0_out;
+
+endmodule //and_wrapped
 
 module fold_or3None (
   input  I0,
@@ -193,28 +197,6 @@ module Op (
 
 endmodule //Op
 
-module xor_wrapped (
-  input  I0,
-  input  I1,
-  output  O
-);
-  //Wire declarations for instance 'inst0' (Module corebit_xor)
-  wire  inst0_in0;
-  wire  inst0_out;
-  wire  inst0_in1;
-  corebit_xor inst0(
-    .in0(inst0_in0),
-    .in1(inst0_in1),
-    .out(inst0_out)
-  );
-
-  //All the connections
-  assign inst0_in0 = I0;
-  assign inst0_in1 = I1;
-  assign O = inst0_out;
-
-endmodule //xor_wrapped
-
 module fold_xor3None (
   input  I0,
   input  I1,
@@ -254,36 +236,6 @@ module PopCount8 (
   input [7:0] I,
   output [3:0] O
 );
-  //Wire declarations for instance '__magma_backend_concat0' (Module corebit_concat)
-  wire  __magma_backend_concat0_in0;
-  wire [1:0] __magma_backend_concat0_out;
-  wire  __magma_backend_concat0_in1;
-  corebit_concat __magma_backend_concat0(
-    .in0(__magma_backend_concat0_in0),
-    .in1(__magma_backend_concat0_in1),
-    .out(__magma_backend_concat0_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat1' (Module corebit_concat)
-  wire  __magma_backend_concat1_in0;
-  wire [1:0] __magma_backend_concat1_out;
-  wire  __magma_backend_concat1_in1;
-  corebit_concat __magma_backend_concat1(
-    .in0(__magma_backend_concat1_in0),
-    .in1(__magma_backend_concat1_in1),
-    .out(__magma_backend_concat1_out)
-  );
-
-  //Wire declarations for instance '__magma_backend_concat2' (Module coreir_concat)
-  wire [1:0] __magma_backend_concat2_in0;
-  wire [3:0] __magma_backend_concat2_out;
-  wire [1:0] __magma_backend_concat2_in1;
-  coreir_concat #(.width0(2),.width1(2)) __magma_backend_concat2(
-    .in0(__magma_backend_concat2_in0),
-    .in1(__magma_backend_concat2_in1),
-    .out(__magma_backend_concat2_out)
-  );
-
   //Wire declarations for instance 'bit_const_GND' (Module corebit_const)
   wire  bit_const_GND_out;
   corebit_const #(.value(0)) bit_const_GND(
@@ -459,13 +411,6 @@ module PopCount8 (
   );
 
   //All the connections
-  assign __magma_backend_concat0_in0 = inst13_O;
-  assign __magma_backend_concat0_in1 = inst12_O;
-  assign __magma_backend_concat2_in0[1:0] = __magma_backend_concat0_out[1:0];
-  assign __magma_backend_concat1_in0 = inst10_O;
-  assign __magma_backend_concat1_in1 = inst8_O;
-  assign __magma_backend_concat2_in1[1:0] = __magma_backend_concat1_out[1:0];
-  assign O[3:0] = __magma_backend_concat2_out[3:0];
   assign inst10_I2 = bit_const_GND_out;
   assign inst11_I2 = bit_const_GND_out;
   assign inst12_I2 = bit_const_GND_out;
@@ -484,12 +429,15 @@ module PopCount8 (
   assign inst7_I0 = inst1_O;
   assign inst10_I0 = inst6_O;
   assign inst10_I1 = inst9_O;
+  assign O[1] = inst10_O;
   assign inst11_I0 = inst6_O;
   assign inst11_I1 = inst9_O;
   assign inst12_I1 = inst11_O;
   assign inst13_I1 = inst11_O;
   assign inst12_I0 = inst7_O;
+  assign O[2] = inst12_O;
   assign inst13_I0 = inst7_O;
+  assign O[3] = inst13_O;
   assign inst2_I0 = I[3];
   assign inst2_I1 = I[4];
   assign inst2_I2 = I[5];
@@ -507,6 +455,7 @@ module PopCount8 (
   assign inst6_I2 = inst5_O;
   assign inst7_I2 = inst5_O;
   assign inst8_I1 = I[7];
+  assign O[0] = inst8_O;
   assign inst9_I1 = I[7];
 
 endmodule //PopCount8

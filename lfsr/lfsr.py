@@ -5,7 +5,7 @@ from magma.testing.coroutine import coroutine, testvectors
 from magma.bitutils import seq2int, int2seq
 import random
 
-main = DefineLFSR(8)
+main = DefineLFSR(8, has_reset=True)
 # print(repr(main))
 
 def lfsr_sim_factory(N, init=1):
@@ -15,10 +15,8 @@ def lfsr_sim_factory(N, init=1):
         regs = int2seq(init, N)
         while True:
             O = seq2int(regs)
-            inputs = yield O
-            if inputs["RESET"] == 1:
-                regs = int2seq(init, N)
-                continue
+            print(O)
+            yield O
             I = 0
             for tap in taps:
                 I ^= regs[tap - 1]

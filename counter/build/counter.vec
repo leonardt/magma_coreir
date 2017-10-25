@@ -1,6 +1,3 @@
-poke,RESET,1
-step,1
-poke,RESET,0
 poke,RESET,0
 expect,O,0
 step, 1
